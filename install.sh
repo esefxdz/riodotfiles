@@ -211,6 +211,22 @@ setup_scripts() {
   success "Scripts are executable."
 }
 
+# ── qBittorrent themes ────────────────────────────────────────────────────────
+setup_qbittorrent() {
+  QB_THEME_SRC="$DOTFILES_DIR/qbittorremnt/themes/custom"
+  QB_THEME_DEST="$HOME/.local/share/qBittorrent/themes"
+
+  if [[ -d "$QB_THEME_SRC" ]]; then
+    info "Installing qBittorrent themes..."
+    mkdir -p "$QB_THEME_DEST"
+    cp -r "$QB_THEME_SRC/"*.qbtheme "$QB_THEME_DEST/"
+    success "qBittorrent themes installed to $QB_THEME_DEST"
+    warn "Activate in qBittorrent: Tools → Preferences → Behavior → Use custom UI theme → pick DarkRed.qbtheme"
+  else
+    warn "qBittorrent themes not found, skipping."
+  fi
+}
+
 # ── Wallpapers (Private Repo) ─────────────────────────────────────────────────
 fetch_wallpapers() {
   WALLPAPER_DIR="$CONFIG_DIR/hypr/wallpapers"
@@ -356,6 +372,7 @@ main() {
   link_zshrc
   set_shell
   setup_scripts
+  setup_qbittorrent
   fetch_wallpapers
   setup_hivemind
   setup_sddm
