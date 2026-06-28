@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# webmtogif — alias launcher that calls mp4togif (since mp4togif already handles webm)
+exec "$HOME/.config/scripts/mp4togif" "$@"

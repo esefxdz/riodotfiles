@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# webmtojpg — launcher for Rio's ffmpeg tools
+# Lives in ~/.config/scripts/ so it's on PATH automatically.
+exec python3 "$HOME/.config/ffmpeg_tools/vid_to_img.py" jpg
