@@ -95,3 +95,4 @@ ip link
 - Workspace 9 has Firefox preloaded silently on boot. Don't close it or you lose the instant-load trick.
 - Throughout installation only 5 packages are pulled from the AUR. eww, mpvpaper, lazydocker, python-textual, hyprpicker. As of now these are not malware but you need to check that for yourself.
 - thx 1k2s pewds and elars
+- cargo install chess-tui and type chess on terminal for funny

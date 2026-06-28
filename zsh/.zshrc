@@ -132,9 +132,13 @@ export PATH="$HOME/.config/scripts:$PATH"
 alias zj='zellij'                           # terminal multiplexer
 alias lg='lazygit'                           # git TUI
 alias lzd='lazydocker'                       # docker TUI
+alias chess='chess-tui'                      # chess TUI (cargo install chess-tui)
 
 # zellij needs TERM to be set correctly inside alacritty
 export TERM=xterm-256color
+
+# Cargo (Rust) — needed for chess-tui and any other cargo installs
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
 # ── Custom commands ───────────────────────────────────────────────────────────
 bedtime() {
