@@ -1,0 +1,16 @@
+[Unit]
+Description=Rio boot animation
+DefaultDependencies=no
+After=systemd-vconsole-setup.service alsa-restore.service
+Before=display-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/boot-animation/play.sh
+TTYPath=/dev/tty1
+StandardInput=tty
+StandardOutput=tty
+StandardError=null
+
+[Install]
+WantedBy=sysinit.target
