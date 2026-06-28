@@ -197,12 +197,52 @@ link_zshrc() {
 # ── Scripts ───────────────────────────────────────────────────────────────────
 setup_scripts() {
   info "Making scripts executable..."
-  chmod +x "$SCRIPTS_DIR/paladin"    2>/dev/null || true
-  chmod +x "$SCRIPTS_DIR/yuuka"      2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/paladin"       2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/yuuka"         2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/mp4togif"      2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/webmtogif"     2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/webmtopng"     2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/webmtojpg"     2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/compressvid"   2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/trimvid"       2>/dev/null || true
   chmod +x "$CONFIG_DIR/hypr/scripts/"*.sh 2>/dev/null || true
   chmod +x "$CONFIG_DIR/eww/scripts/"**/*.sh 2>/dev/null || true
   chmod +x "$CONFIG_DIR/eww/scripts/"**/*.py 2>/dev/null || true
   success "Scripts are executable."
+}
+
+# ── Wallpapers (Private Repo) ─────────────────────────────────────────────────
+fetch_wallpapers() {
+  WALLPAPER_DIR="$CONFIG_DIR/hypr/wallpapers"
+  WALLPAPER_REPO="esefxdz/riowallpapers"
+
+  if [[ -d "$WALLPAPER_DIR" ]] && [[ -n "$(ls -A "$WALLPAPER_DIR" 2>/dev/null)" ]]; then
+    warn "Wallpapers already exist at $WALLPAPER_DIR. Skipping."
+    return
+  fi
+
+  info "Setting up private wallpapers repository..."
+  
+  # Ensure Git LFS and GitHub CLI are installed
+  sudo pacman -S --needed --noconfirm git-lfs github-cli
+  git lfs install
+
+  echo -e ""
+  warn "Your wallpapers repo is PRIVATE."
+  info "You need to log into GitHub to download them."
+  echo -e "Follow the prompts below to authenticate (select HTTPS, then login via web browser):\n"
+  
+  # Prompt user to login
+  gh auth login
+
+  if gh auth status &>/dev/null; then
+    info "Successfully authenticated. Cloning wallpapers..."
+    # Clone using GH CLI which automatically handles the auth token
+    GIT_LFS_SKIP_SMUDGE=0 gh repo clone "$WALLPAPER_REPO" "$WALLPAPER_DIR"
+    success "Private wallpapers downloaded."
+  else
+    die "GitHub authentication failed. Cannot download private wallpapers."
+  fi
 }
 
 # ── Hivemind service ──────────────────────────────────────────────────────────
@@ -316,6 +356,7 @@ main() {
   link_zshrc
   set_shell
   setup_scripts
+  fetch_wallpapers
   setup_hivemind
   setup_sddm
   setup_sensors
