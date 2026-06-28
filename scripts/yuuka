@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Clear the screen and print a cool dystopian header
+clear
+echo -e "\e[1;31m==================================================\e[0m"
+echo -e "\e[1;31m◈  INITIATING UPLINK TO YUUKA                    ◈\e[0m"
+echo -e "\e[1;31m◈  100kg calculator wife                         ◈\e[0m"
+echo -e "\e[1;31m==================================================\e[0m"
+echo ""
+
+# Connect via SSH
+ssh esef@192.168.1.108
+
+#i ll handle the ssh keygen later

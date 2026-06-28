@@ -1,0 +1,94 @@
+# ──────────────────────────────────────────────────────────────────────────
+#  Lazydocker Config
+#  Black, red, dystopian themed — matches Rio dotfiles palette
+#  Location: ~/.config/lazydocker/config.yml
+#  vers. 1.0.0
+# ──────────────────────────────────────────────────────────────────────────
+
+gui:
+  # ── Layout ─────────────────────────────────────────────────────────────────
+  scrollHeight: 2
+  scrollPastBottom: true
+  mouseEvents: false
+  expandFocusedSidePanel: true
+  sidePanelWidth: 0.333
+  mainPanelSplitMode: vertical
+
+  # ── Theme ───────────────────────────────────────────────────────────────────
+  theme:
+    activeBorderColor:
+      - "#ff2a2a"                # Rio Red bright — focused panel
+      - bold
+    inactiveBorderColor:
+      - "#1e1e1e"                # near-black — unfocused panels
+    selectedLineBgColor:
+      - "#d12424"                # Rio Red dark — selected row
+    optionsTextColor:
+      - "#888888"                # muted grey — keybind hints
+
+  returnImmediately: false
+  wrapMainPanel: true
+  legendIsVisible: true
+
+logs:
+  timestamps: false
+  since: "60m"
+  tail: ""
+
+commandTemplates:
+  dockerCompose: "docker-compose"
+  restartService: "{{.DockerCompose}} restart {{.Service.Name}}"
+  rebuildService: "{{.DockerCompose}} up -d --build {{.Service.Name}}"
+  recreateService: "{{.DockerCompose}} up -d --force-recreate {{.Service.Name}}"
+  stopService: "{{.DockerCompose}} stop {{.Service.Name}}"
+  serviceLogs: "{{.DockerCompose}} logs --timestamps --follow --tail=300 {{.Service.Name}}"
+  viewServiceLogs: "{{.DockerCompose}} logs --follow --tail=300 {{.Service.Name}}"
+  allServiceLogs: "{{.DockerCompose}} logs --follow --tail=300"
+  dockerComposeConfig: "{{.DockerCompose}} config"
+  checkDockerComposeConfig: "{{.DockerCompose}} config --quiet"
+  containerLogs: "docker logs --timestamps --follow --tail=300 {{.Container.ID}}"
+  viewContainerLogs: "docker logs --follow --tail=300 {{.Container.ID}}"
+  containerStats: "docker stats {{.Container.ID}}"
+  containerExecShell: "docker exec -it {{.Container.ID}} /bin/sh"
+  pruneContainers: "docker container prune -f"
+  pruneVolumes: "docker volume prune -f"
+  pruneImages: "docker image prune -f"
+
+stats:
+  graphs:
+    - caption: CPU (%)
+      statPath: DerivedStats.CPUPercentage
+      color: "#ff2a2a"          # Rio Red
+    - caption: MEM (%)
+      statPath: DerivedStats.MemoryPercentage
+      color: "#d12424"          # Rio Red dark
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+#  POST-INSTALL SETUP (Manual Steps)
+#
+#  1. INSTALL:
+#       sudo pacman -S lazydocker
+#       (if not in main repos: yay -S lazydocker-bin)
+#
+#  2. MAKE SURE DOCKER IS RUNNING:
+#       sudo systemctl enable --now docker
+#       sudo usermod -aG docker $USER   ← run once, then re-login
+#
+#  3. DEPLOY THIS CONFIG:
+#       mkdir -p ~/.config/lazydocker
+#       cp ~/dotfiles/lazydocker/config.yml ~/.config/lazydocker/config.yml
+#
+#  4. USAGE:
+#       lazydocker       → launch the TUI
+#       lzd              → via .zshrc alias
+#
+#  5. KEY KEYBINDS (defaults):
+#       [  ]             → switch panel left/right
+#       e                → exec shell into container
+#       d                → delete container/image
+#       s                → stop container
+#       r                → restart container
+#       l                → view logs
+#       q                → quit
+# ──────────────────────────────────────────────────────────────────────────────

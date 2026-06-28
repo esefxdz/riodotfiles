@@ -1,0 +1,171 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   My rio swaync theme
+   Black, red, dystopian themed
+   vers. 1.0.0
+───────────────────────────────────────────────────────────────────────────── */
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-weight: bold;
+}
+
+.control-center .notification-row:focus,
+.control-center .notification-row:hover {
+  opacity: 1;
+  background: transparent;
+}
+
+.notification-row {
+  outline: none;
+  margin: 10px;
+  padding: 0;
+}
+
+.notification {
+  background: rgba(5, 0, 0, 0.95);
+  padding: 10px;
+  margin: 0px;
+  border: 1px solid #ff2a2a;
+  border-radius: 0px;
+}
+
+.notification-content {
+  background: transparent;
+  padding: 5px;
+  border-radius: 0px;
+}
+
+.close-button {
+  background: transparent;
+  color: #ff2a2a;
+  text-shadow: none;
+  padding: 0;
+  border-radius: 0px;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.close-button:hover {
+  box-shadow: none;
+  background: transparent;
+  transition: all 0.15s ease-in-out;
+  border: none;
+}
+
+.notification-default-action {
+  margin: 0;
+  padding: 0;
+  border-radius: 0px;
+}
+
+.notification-action {
+  border: 1px solid #ff2a2a;
+  border-top: none;
+  border-radius: 0px;
+}
+
+.notification-default-action:hover,
+.notification-action:hover {
+  color: #ff2a2a;
+  background: rgba(255, 42, 42, 0.1);
+}
+
+.notification-default-action:active,
+.notification-action:active {
+  color: #ff2a2a;
+  background: rgba(255, 42, 42, 0.2);
+}
+
+.summary {
+  font-size: 14px;
+  color: #ff2a2a;
+  background: transparent;
+}
+
+.time {
+  font-size: 11px;
+  color: #b80000;
+  background: transparent;
+  margin-right: 24px;
+}
+
+.body {
+  font-size: 13px;
+  font-weight: normal;
+  background: transparent;
+  color: #ffffff;
+}
+
+/* Control center */
+
+.control-center {
+  background: rgba(5, 0, 0, 0.95);
+  border: 1px solid #ff2a2a;
+  border-radius: 0px;
+  color: #ff2a2a;
+}
+
+.control-center-list {
+  background: transparent;
+}
+
+.control-center-list-placeholder {
+  opacity: 0.5;
+}
+
+.control-center-list-empty {
+  opacity: 0.5;
+}
+
+.widget-title {
+  color: #ff2a2a;
+  background: transparent;
+  padding: 5px 10px;
+  margin: 10px 10px 5px 10px;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #ff2a2a;
+}
+
+.widget-title > button {
+  font-size: 12px;
+  color: #ffffff;
+  text-shadow: none;
+  background: transparent;
+  border: 1px solid #ff2a2a;
+  box-shadow: none;
+  border-radius: 0px;
+}
+
+.widget-title > button:hover {
+  background: rgba(255, 42, 42, 0.1);
+  color: #ff2a2a;
+}
+
+.widget-dnd {
+  background: transparent;
+  padding: 5px 10px;
+  margin: 5px 10px;
+}
+
+.widget-dnd > switch {
+  font-size: initial;
+  border-radius: 0px;
+  background: transparent;
+  border: 1px solid #ff2a2a;
+  box-shadow: none;
+}
+
+.widget-dnd > switch:checked {
+  background: #ff2a2a;
+  border: 1px solid #ff2a2a;
+}
+
+.widget-dnd > switch slider {
+  background: #ffffff;
+  border-radius: 0px;
+}
+
+.widget-dnd > switch:checked slider {
+  background: #000000;
+  border-radius: 0px;
+}

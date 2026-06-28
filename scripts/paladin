@@ -1,0 +1,255 @@
+#!/usr/bin/env python3
+"""
+██████╗  █████╗ ██╗      █████╗ ██████╗ ██╗███╗   ██╗
+██╔══██╗██╔══██╗██║     ██╔══██╗██╔══██╗██║████╗  ██║
+██████╔╝███████║██║     ███████║██║  ██║██║██╔██╗ ██║
+██╔═══╝ ██╔══██║██║     ██╔══██║██║  ██║██║██║╚██╗██║
+██║     ██║  ██║███████╗██║  ██║██████╔╝██║██║ ╚████║
+╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝  ╚═══╝
+HIVEMIND UPLINK — Dystopian Server Monitor
+
+Usage: paladin
+Dependencies: pip install textual
+"""
+
+import asyncio
+from datetime import datetime
+from textual.app import App, ComposeResult
+from textual.containers import Horizontal, Vertical
+from textual.widgets import RichLog, Static
+from textual.reactive import reactive
+from rich.text import Text
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  CONFIG — edit these to match your server
+# ═══════════════════════════════════════════════════════════════════════════════
+SSH_HOST     = "204.168.246.88"
+SSH_USER     = "root"
+SSH_KEY_PATH = "~/.ssh/ssh_key_hetzner"   # Copy your key here on Linux
+SERVICE_NAME = "hivemind"
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# ── Color mapping per tag ─────────────────────────────────────────────────────
+TAG_COLORS = {
+    "[HIVEMIND]": "bold red",
+    "[SESSION]":  "bold green",
+    "[TC]":       "bold yellow",
+    "[WG]":       "bold cyan",
+    "[API]":      "bold magenta",
+    "[ADMOB]":    "bold red",
+    "[CMD FAIL]": "bold dark_red",
+}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  INTEL SIDEBAR WIDGET
+# ═══════════════════════════════════════════════════════════════════════════════
+class IntelPanel(Static):
+    """Sidebar showing live session counters derived from the log stream."""
+
+    sessions_active  = reactive(0)
+    sessions_started = reactive(0)
+    sessions_expired = reactive(0)
+    throttled_count  = reactive(0)
+    rejected_count   = reactive(0)
+    admob_events     = reactive(0)
+
+    def render(self) -> Text:
+        t = Text()
+        def row(label: str, value: int, style: str) -> Text:
+            r = Text()
+            r.append(f"  {label:<20}", style="white")
+            r.append(f"{value:>4}\n", style=style)
+            return r
+
+        t.append("┌─ INTEL ──────────────────┐\n", style="bold red")
+        t.append_text(row("Active Sessions",  self.sessions_active,  "bold green"))
+        t.append("  ──────────────────────────\n", style="dim red")
+        t.append_text(row("Sessions Started", self.sessions_started, "bold green"))
+        t.append_text(row("Sessions Expired", self.sessions_expired, "dim white"))
+        t.append_text(row("Throttled",        self.throttled_count,  "bold yellow"))
+        t.append_text(row("Rejected",         self.rejected_count,   "bold red"))
+        t.append("  ──────────────────────────\n", style="dim red")
+        t.append_text(row("AdMob Events",     self.admob_events,     "dim cyan"))
+        t.append("└──────────────────────────┘", style="bold red")
+        return t
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  MAIN APP
+# ═══════════════════════════════════════════════════════════════════════════════
+class PaladinApp(App):
+    CSS = """
+    Screen {
+        background: #111111;
+    }
+
+    #header-bar {
+        height: 3;
+        background: #111111;
+        border-bottom: solid #ff2a2a;
+        content-align: center middle;
+        color: #ff2a2a;
+        text-style: bold;
+    }
+
+    #main-layout {
+        height: 1fr;
+    }
+
+    #log-panel {
+        width: 4fr;
+        border-right: solid #3a0a0a;
+        background: #0d0d0d;
+        padding: 0 1;
+    }
+
+    #sidebar {
+        width: 28;
+        background: #111111;
+        padding: 1 0;
+    }
+
+    #intel {
+        color: white;
+        height: auto;
+        padding: 0 1;
+    }
+
+    #status-bar {
+        height: 1;
+        background: #d12424;
+        color: #111111;
+        text-style: bold;
+        content-align: left middle;
+        padding: 0 1;
+    }
+    """
+
+    BINDINGS = [
+        ("q", "quit", "Quit"),
+        ("c", "clear_log", "Clear"),
+    ]
+
+    def compose(self) -> ComposeResult:
+        yield Static(
+            "◈  PALADIN  //  HIVEMIND UPLINK  ◈",
+            id="header-bar",
+        )
+        with Horizontal(id="main-layout"):
+            yield RichLog(highlight=False, markup=False, id="log-panel", wrap=True)
+            with Vertical(id="sidebar"):
+                yield IntelPanel(id="intel")
+        yield Static(
+            f"  [q] quit   [c] clear   │   {SSH_USER}@{SSH_HOST}   │   {SERVICE_NAME}.service",
+            id="status-bar",
+        )
+
+    def on_mount(self) -> None:
+        self.run_worker(self.stream_logs(), exclusive=True)
+
+    def action_clear_log(self) -> None:
+        self.query_one("#log-panel", RichLog).clear()
+
+    def _colorize(self, raw: str) -> Text:
+        """Turn a raw log line into a colored Rich Text object."""
+        now    = datetime.now().strftime("%H:%M:%S")
+        prefix = Text(f" {now}  ", style="dim #555555")
+        color  = "white"
+
+        for tag, base_color in TAG_COLORS.items():
+            if tag in raw:
+                color = base_color
+
+                if tag == "[SESSION]":
+                    if any(k in raw for k in ("expired", "Rejected", "stop")):
+                        color = "bold red"
+                    elif "Bonus" in raw:
+                        color = "bold yellow"
+
+                elif tag == "[HIVEMIND]":
+                    if any(k in raw for k in ("expired", "Throttling", "error", "Unhandled")):
+                        color = "bold red"
+                    elif "Started" in raw:
+                        color = "dim red"
+
+                elif tag == "[TC]":
+                    if "Removing" in raw:
+                        color = "dim white"
+
+                elif tag == "[WG]":
+                    color = "cyan" if "added" in raw else "dim white"
+
+                elif tag == "[ADMOB]":
+                    color = "dim cyan"
+                    if any(k in raw for k in ("WARNING", "Error", "failed", "Rejected", "Unknown", "SSV")):
+                        color = "bold red"
+                break
+
+        return prefix + Text(raw, style=color)
+
+    def _update_counters(self, raw: str) -> None:
+        intel = self.query_one("#intel", IntelPanel)
+
+        if "[SESSION] Main session started" in raw:
+            intel.sessions_started += 1
+            intel.sessions_active  += 1
+        elif "[SESSION] Rejected" in raw:
+            intel.rejected_count += 1
+        elif "[HIVEMIND] Session expired" in raw:
+            intel.sessions_expired += 1
+            intel.sessions_active   = max(0, intel.sessions_active - 1)
+        elif "[HIVEMIND] Data cap reached" in raw:
+            intel.throttled_count += 1
+        elif "[TC] Removing throttle" in raw:
+            intel.throttled_count = max(0, intel.throttled_count - 1)
+        elif "[API] Explicit stop" in raw:
+            intel.sessions_active = max(0, intel.sessions_active - 1)
+        elif "[ADMOB]" in raw:
+            intel.admob_events += 1
+
+    async def stream_logs(self) -> None:
+        log = self.query_one("#log-panel", RichLog)
+
+        cmd = [
+            "ssh",
+            "-i", SSH_KEY_PATH,
+            "-o", "StrictHostKeyChecking=no",
+            "-o", "ServerAliveInterval=30",
+            f"{SSH_USER}@{SSH_HOST}",
+            f"journalctl -u {SERVICE_NAME} -f --no-pager -o cat",
+        ]
+
+        log.write(Text("  Establishing uplink...", style="dim red"))
+
+        try:
+            proc = await asyncio.create_subprocess_exec(
+                *cmd,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+            )
+
+            log.write(Text(f"  ◈ UPLINK ESTABLISHED — {SSH_USER}@{SSH_HOST}", style="bold red"))
+            log.write(Text("  " + "─" * 58, style="dim red"))
+
+            async for line_bytes in proc.stdout:
+                raw = line_bytes.decode("utf-8", errors="replace").rstrip()
+                if not raw:
+                    continue
+                self._update_counters(raw)
+                log.write(self._colorize(raw))
+
+        except FileNotFoundError:
+            log.write(Text("  [ERROR] ssh not found. Is OpenSSH installed?", style="bold red"))
+        except Exception as e:
+            log.write(Text(f"  [CONNECTION FAILED] {e}", style="bold red"))
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  ENTRY POINT
+# ═══════════════════════════════════════════════════════════════════════════════
+def main():
+    PaladinApp().run()
+
+if __name__ == "__main__":
+    main()

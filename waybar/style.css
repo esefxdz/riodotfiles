@@ -1,0 +1,239 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   My rio waybar theme
+   Black, red, dystopian themed
+   vers. 1.0.0
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* === Base Waybar Styling ================================================= */
+
+waybar * {
+  border: 4px;
+  border-radius: 4px;
+  min-height: 0;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 14px;
+}
+
+#waybar {
+  background-color: #121212;
+  border-radius: 2px;
+  opacity: 0.95;
+}
+
+window#waybar {
+  background: #1e1e1e;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  color: #ffffff;
+  border: 3px solid #d12424;
+  border-left: 3px solid #d12424;
+  border-right: 3px solid #d12424;
+}
+
+
+/* === Workspaces ========================================================== */
+
+#workspaces {
+  background-color: transparent;
+  padding-left: 40px;
+}
+
+#workspaces button {
+  all: initial;
+  min-width: 0;
+  box-shadow: inherit;
+  padding: 6px 6px;
+  margin: 6px 3px;
+  border-radius: 4px;
+  background-color: #1e1e1e;
+  color: #d12424;
+}
+
+#workspaces button.active {
+  color: #ff2a2a;
+  background-color: #1e1e1e;
+}
+
+#workspaces button:hover {
+  color: #ff2a2a;
+  background-color: #282828;
+}
+
+
+/* === Default Module Container Styling ==================================== */
+
+#custom-microphone,
+#custom-volume,
+#custom-power,
+#custom-clipboard,
+#custom-recorder,
+#custom-dunst,
+#idle_inhibitor,
+#keyboard-state,
+    #network,
+    #pulseaudio,
+#clock,
+#tray {
+  padding: 6px 12px;
+  margin: 6px 6px;
+  background-color: #1e1e1e;
+  border: 2px solid #d12424;
+  border-radius: 2px;
+}
+
+
+/* === Audio ============================================================== */
+
+#pulseaudio.muted {
+  background-color: #ff2a2a;
+  color: #0c0c0c;
+}
+
+
+/* === Keyboard Layout ===================================================== */
+
+#keyboard-state {
+  color: #ffffff;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+#keyboard-state.numlock.locked {
+  color: #ff2a2a;
+}
+
+
+/* === Clipboard ============================================================ */
+
+#custom-clipboard {
+  color: #ffffff;
+  transition: color 0.2s ease-in-out;
+}
+
+
+/* === Network ============================================================= */
+
+#network.disconnected {
+  background-color: #ff2a2a;
+  color: #0c0c0c;
+}
+
+
+/* === Clock =============================================================== */
+
+#clock {
+  font-weight: bold;
+  font-size: 12px;
+  color: #ffffff;
+}
+
+
+
+
+
+
+
+/* === Tray ================================================================ */
+
+#tray {
+  padding: 4px 10px;
+  background-color: #0c0c0c;
+  border: 2px solid #d12424;
+  border-radius: 2px;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  border-color: #ff2a2a;
+}
+
+
+/* === Idle Inhibitor ====================================================== */
+
+#idle_inhibitor.activated {
+  color: #ff2a2a;
+  border-color: #ff2a2a;
+}
+
+#idle_inhibitor.deactivated {
+  color: #666666;
+}
+
+
+/* === Recorder ============================================================ */
+
+#custom-recorder.recording {
+  color: #ff2a2a;
+  animation: recording-blink 1s linear infinite;
+}
+
+@keyframes recording-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+
+/* === SwayNC =============================================================== */
+
+#custom-swaync {
+  color: #ff2a2a;
+}
+
+
+
+/* === Custom Workspace Labels ============================================= */
+
+#custom-work-left,
+#custom-work-right {
+  padding: 6px 6px;
+  margin: 6px 3px;
+}
+
+#custom-workspace-1:hover,
+#custom-workspace-2:hover,
+#custom-workspace-3:hover,
+#custom-workspace-4:hover {
+  color: #ff2a2a; 
+  transition: all 0.2s ease-in-out;
+}
+
+
+
+/* === Hover Effects ======================================================= */
+/* Unified look for all interactive modules                                */
+
+#custom-microphone:hover,
+#custom-volume:hover,
+#custom-clipboard:hover,
+#custom-recorder:hover,
+#custom-swaync:hover,
+#idle_inhibitor:hover,
+#keyboard-state:hover,
+#pulseaudio:hover,
+#network:hover,
+#custom-power:hover,
+#clock:hover,
+#tray:hover {
+  background-color: #282828;
+  border: 2px solid #ff2a2a;
+  color: #ff2a2a;
+  transition: all 0.2s ease-in-out;
+}
+
+
+/* === Tooltips ============================================================ */
+
+tooltip {
+  color: #ffffff;
+  background-color: #121212;
+  border: 1px solid #d12424;
+  font-weight: bold;
+}
+
+tooltip label {
+  color: #cccccc;
+}

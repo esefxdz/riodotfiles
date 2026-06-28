@@ -1,0 +1,146 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  Rio Dotfiles — Arch Linux Requirements
+#  These are the packages you need to install on a fresh Arch system
+#  before applying the dotfiles.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Core Wayland & Window Manager ───────────────────────────────────────────
+hyprland            # The window manager itself
+hyprcursor          # Hyprland native cursor support
+xdg-desktop-portal-hyprland # Required for screen sharing / portals
+xdg-desktop-portal-gtk      # Fallback portal (required for some apps)
+qt5-wayland         # Wayland support for Qt5 apps
+qt6-wayland         # Wayland support for Qt6 apps
+
+# ── Hardware & Drivers (NVIDIA) ──────────────────────────────────────────────
+nvidia              # Proprietary NVIDIA driver
+nvidia-utils        # NVIDIA utilities (required for Wayland)
+nvidia-settings     # NVIDIA control panel
+
+# ── Display Manager (Boot Screen) ───────────────────────────────────────────
+sddm                # The login screen
+qt5-graphicaleffects # Required for SDDM themes
+qt5-quickcontrols2  # Required for SDDM themes
+qt5-svg             # Required for SDDM themes
+
+# ── Utilities & Daemons ─────────────────────────────────────────────────────
+waybar              # Top status bar
+rofi-wayland        # App launcher (make sure it's the wayland fork)
+swaync              # Notification daemon with control center
+hyprpaper           # Static wallpaper daemon
+mpvpaper            # Live video wallpaper daemon
+polkit-kde-agent    # Authentication dialogs (required for sudo GUI prompts)
+wl-clipboard        # Copy/paste support on Wayland
+
+# ── Network & Bluetooth ──────────────────────────────────────────────────────
+networkmanager      # Core networking service
+nm-connection-editor # GUI for NetworkManager
+bluez               # Bluetooth stack
+bluez-utils         # Bluetooth command‑line tools
+blueman             # Bluetooth GUI applet
+
+# ── Terminal & Shell ────────────────────────────────────────────────────────
+alacritty           # Terminal emulator
+zsh                 # Zsh shell
+starship            # Prompt for Zsh
+zoxide              # Directory jumper
+eza                 # Modern ls replacement
+bat                 # Cat clone with syntax highlighting
+fzf                 # Fuzzy finder
+fd                  # Fast find replacement
+ripgrep             # Fast grep replacement
+htop                # Interactive process monitor
+btop                # Resource monitor (monitor alias)
+neofetch            # System info (optional, fastfetch primary)
+fastfetch           # Fast system info fetcher
+tmux                # Terminal multiplexer (optional, use zellij)
+
+# ── Audio & Media ───────────────────────────────────────────────────────────
+pipewire            # Modern audio server
+pipewire-pulse      # PulseAudio compatibility layer
+wireplumber         # Pipewire session manager
+pamixer             # Command‑line volume control
+playerctl           # Media keys controller
+brightnessctl       # Screen brightness control
+cava                # Audio visualizer (OpenGL/SLA)
+pavucontrol         # Volume mixer GUI
+nvtop               # NVIDIA GPU monitoring (top‑like)
+
+# ── Widgets (Eww) ───────────────────────────────────────────────────────────
+eww                 # Eww widget framework
+jq                  # JSON processor for Eww scripts
+socat               # Network socket utility for Hyprland/Eww communication
+
+# ── Fonts & Icons ───────────────────────────────────────────────────────────
+ttf-jetbrains-mono-nerd # Primary mono‑nerd font
+ttf-nerd-fonts-symbols # Symbol fallback font
+papirus-icon-theme   # Dark icon theme (matches Rua aesthetic)
+nwg-look            # GTK theme/icon cursor configurator (Wayland GUI)
+
+# ── Screenshotting ──────────────────────────────────────────────────────────
+grim                # Screenshotting tool
+slurp               # Region selector for grim
+swappy              # Wayland screenshot editor (annotations)
+
+# ── Performance & Gaming ───────────────────────────────────────────────────
+mangohud            # Vulkan/OpenGL overlay for FPS & stats
+steam               # Gaming platform (optional)
+wine               # Windows compatibility layer (optional)
+lutris              # Game manager (optional)
+
+# ── System Back‑bone ──────────────────────────────────────────────────────────
+gnome-keyring       # Secret storage (for VSCode, GitHub, etc.)
+seahorse            # GUI for GNOME keyring
+gvfs                # Virtual file system (trash, network drives)
+udisks2             # Disk management service
+udiskie             # Auto‑mount USB drives (depends on udisks2)
+
+# ── File Management ────────────────────────────────────────────────────────
+thunar              # Lightweight file manager
+tumbler             # Thumbnail generation for Thunar
+file-roller         # Archive manager (zip, tar, etc.)
+
+# ── AUR Helpers (Optional) ──────────────────────────────────────────────────
+yay                 # AUR helper for installing community packages
+paru                # Alternative AUR helper (choose one)
+
+# ── Python & Pip Dependencies ───────────────────────────────────────────────
+python              # Base Python interpreter
+pip                 # Python package installer
+textual             # TUI framework used by `paladin`
+
+# ── Additional Utilities ─────────────────────────────────────────────────────
+git                 # Version control system
+curl                # Data transfer tool
+wget                # Download utility
+base-devel          # Development tools (make, gcc, etc.)
+
+# ── Terminal Multiplexing & Dev Tools ──────────────────────────────────
+zellij              # Modern, Rust-based terminal multiplexer
+lazygit             # TUI for git operations
+lazydocker          # TUI for docker container management
+
+# ── Window Manager Utilities ────────────────────────────────────────────────
+hyprpicker          # Wayland native color picker
+cliphist            # Wayland clipboard history daemon
+
+# ── Invisible System Backbone ──────────────────────────────────────────────
+gnome-keyring       # Stores auth tokens (VSCode, GitHub, Discord)
+seahorse            # GUI manager for gnome-keyring
+gvfs                # GNOME Virtual File System (trash, network drives, auto-mounting)
+udisks2             # Disk management service
+udiskie             # Auto-mount USBs on plug-in (relies on udisks2)
+
+# ── File Management ────────────────────────────────────────────────────────
+thunar              # Lightweight file manager
+tumbler             # Thumbnail generation for Thunar
+file-roller         # GUI archive manager (.zip, .tar.gz extraction)
+papirus-icon-theme  # Recommended icon theme (looks great with dark GTK)
+
+# ── AUR Helpers (Optional but recommended) ──────────────────────────────────
+# You will likely need `yay` or `paru` installed to get packages like
+# `rofi-wayland`, `eww`, and `mpvpaper` if they aren't in the main repos.
+
+# ── Python (pip) dependencies ────────────────────────────────────────────────
+# Install with: pip install textual
+textual             # TUI framework used by `paladin` (Hivemind monitor)

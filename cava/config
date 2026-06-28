@@ -1,0 +1,76 @@
+# ─────────────────────────────────────────────────────────────────────────
+#  My rio cava theme
+#  Black, red, dystopian themed
+#  vers. 1.0.0
+# ─────────────────────────────────────────────────────────────────────────
+
+; ── General ───────────────────────────────────────────────────────────────
+[general]
+; framerate – frames per second (non‑negative)
+framerate = 64
+
+; number of bars (0 = auto). 64 gives a nice “classic” look.
+bars = 64
+
+; ── Input ─────────────────────────────────────────────────────────────────
+[input]
+; Choose the backend you actually use.  Here we keep *pulse* active and
+; leave the other back‑ends commented for easy switching.
+method = pulse
+source = alsa_output.pci-0000_06_00.6.analog-stereo.monitor
+;method = pipewire
+;source = auto
+;method = alsa
+;source = hw:Loopback,1
+;method = fifo
+;source = /tmp/mpd.fifo
+;method = shmem
+;source = /squeezelite-AA:BB:CC:DD:EE:FF
+;method = portaudio
+;source = auto
+;method = sndio
+;source = default
+;method = oss
+;source = /dev/dsp
+;method = jack
+;source = default
+
+; ── Output ────────────────────────────────────────────────────────────────
+[output]
+; Using OpenGL for high-res graphical shaders on desktop
+method = opengl
+
+[opengl]
+fragment_shader = ~/.config/cava/shaders/northern_lights.frag
+vertex_shader = ~/.config/cava/shaders/pass_through.vert
+
+
+; ── Colours ───────────────────────────────────────────────────────────────
+[color]
+; Rio Theme Colors
+background = '#00000000' ; Transparent background for desktop overlay
+foreground = '#ff2a2a'
+
+; Gradients look amazing with northern_lights
+gradient = 1
+gradient_count = 3
+gradient_color_1 = '#5e0000'
+gradient_color_2 = '#b80000'
+gradient_color_3 = '#ff2a2a'
+
+; ── Smoothing ─────────────────────────────────────────────────────────────
+[smoothing]
+; The “Monstercat” smoothing algorithm gives a nice, slightly‑soft look.
+; Set to 0 to disable, 1‑100 to increase smoothness.
+monstercat = 0
+waves      = 0
+
+; ── Equaliser (optional) ─────────────────────────────────────────────────
+[eq]
+; Uncomment the bands you want to boost/cut.  Values are 0‑100 where 50 is
+; “no change”.  Example shows a flat (all‑50) EQ.
+;1 = 50   ; bass
+;2 = 50
+;3 = 50   ; mid‑tone
+;4 = 50
+;5 = 50   ; treble

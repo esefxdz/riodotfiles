@@ -1,0 +1,97 @@
+// ──────────────────────────────────────────────────────────────────────────
+//  My rio fastfetch config
+//  Black, red, dystopian themed
+//  vers. 1.0.0
+// ──────────────────────────────────────────────────────────────────────────
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  // ── Logo ──────────────────────────────────────────────────────────────────
+  "logo": {
+    "type": "builtin",
+    "source": "arch",
+    "color": {
+      "1": "red",
+      "2": "red"
+    }
+  },
+  // ── Display ───────────────────────────────────────────────────────────────
+  "display": {
+    "separator": " : ",
+    "color": {
+      "separator": "red"
+    }
+  },
+  // ── Modules ───────────────────────────────────────────────────────────────
+  "modules": [
+    "break",
+    // title: esef@rio styled in red
+    {
+      "type": "title",
+      "color": {
+        "user": "red",
+        "at": "red",
+        "host": "red"
+      }
+    },
+    "break",
+    // ── System ──────────────────────────────────────────────────────────────
+    {
+      "type": "os",
+      "key": "        os",
+      "keyColor": "red"
+    },
+    {
+      "type": "kernel",
+      "key": "    kernel",
+      "keyColor": "red"
+    },
+    {
+      "type": "packages",
+      "key": "      pkgs",
+      "keyColor": "red"
+    },
+    {
+      "type": "shell",
+      "key": "     shell",
+      "keyColor": "red"
+    },
+    {
+      "type": "terminal",
+      "key": "  terminal",
+      "keyColor": "red"
+    },
+    {
+      "type": "wm",
+      "key": "        wm",
+      "keyColor": "red"
+    },
+    "break",
+    // ── Hardware ─────────────────────────────────────────────────────────────
+    {
+      "type": "cpu",
+      "key": "       cpu",
+      "keyColor": "red"
+    },
+    {
+      "type": "gpu",
+      "key": "       gpu",
+      "keyColor": "red"
+    },
+    {
+      "type": "memory",
+      "key": "    memory",
+      "keyColor": "red"
+    },
+    {
+      "type": "disk",
+      "key": "      disk",
+      "keyColor": "red"
+    },
+    {
+      "type": "uptime",
+      "key": "    uptime",
+      "keyColor": "red"
+    },
+    "break"
+  ]
+}

@@ -1,0 +1,14 @@
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW,
+THE SOFTWARE IS PROVIDED "AS IS". THERE ARE NO 
+WARRANTIES UNDER THIS EULA, AND LICENSOR DISCLAIMS 
+ANY IMPLIED WARRANTY OF MERCHANTABILITY OR 
+FITNESS FOR PARTICULAR PURPOSE, OR THE WARRANTY 
+OF NON-INFRINGEMENT.
+
+ASSENT: By clicking “Yes” below, or by opening the file
+package containing the software, you agree that this EULA is
+a legally binding and valid contract, agree to abide by all
+of the terms and conditions of this EULA, and further agree
+to take all necessary steps to ensure that the terms and
+conditions of this EULA are not violated by any person or
+entity under your control or in your service.

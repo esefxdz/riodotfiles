@@ -1,0 +1,424 @@
+// ──────────────────────────────────────────────────────────────────────────
+//   My rio eww style
+//   Black, red, dystopian themed
+//   EWW HUD style (Rio Theme)
+//   vers. 1.0.0
+// ──────────────────────────────────────────────────────────────────────────
+
+
+// ── Visualizer ────────────────────────────────────────────────────────────
+.visualizer-container {
+  background-color: transparent;
+}
+
+.visualizer {
+  color: #ff2a2a; // Rio Red
+  font-family: monospace;
+  background-color: transparent;
+  font-size: 9px;
+}
+
+.visualizer-container {
+  border-radius: 2px;
+  background: linear-gradient(to top, rgba(18,18,18,0.5), rgba(18,18,18,0));
+  padding: 4px;
+}
+
+.visualizer-text {
+  font-family: monospace;
+  font-size: 8px;
+  color: #d12424;
+}
+
+
+// ── Windows ───────────────────────────────────────────────────────────────
+window {
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+.window {
+  background-color: transparent;
+}
+
+
+// ── Pixel ASCII ───────────────────────────────────────────────────────────
+.pixel-container {
+  background-color: transparent;
+  padding: 2px;
+}
+
+.pixel-ascii {
+  font-family: monospace;
+  font-size: 6px;
+  color: #ff2a2a;
+  background-color: transparent;
+}
+
+
+// ── Color Classes ─────────────────────────────────────────────────────────
+.red_1  { color: #ff2a2a; }
+.green_1 { color: #ffffff; }
+.blue_1  { color: #ff2a2a; }
+.yellow_1 { color: #ffffff; }
+
+.red_2  { color: #ff2a2a; }
+.green_2 { color: #cccccc; }
+.blue_2  { color: #ff2a2a; }
+.yellow_2 { color: #ff2a2a; }
+
+
+// ── Frames ────────────────────────────────────────────────────────────────
+.outer-frame {
+  border: 2px solid #ff2a2a;
+  border-radius: 3px;
+  padding: 4px;
+  background-color: transparent;
+  min-width: 350px;
+}
+
+.inner-frame {
+  border: 2px solid #d12424;
+  border-radius: 1px;
+  padding: 6px;
+  //background-color: rgba(18, 18, 18, 0.4);
+}
+
+.module-frame {
+  border: 2px solid #ff2a2a;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+  min-height: 10px;
+  min-width: 140px;
+}
+
+.module-frame {
+  border: 2px solid #ff2a2a;
+  border-radius: 2px;
+  margin: 5px;
+  padding: 1px;
+  min-height: 10px;
+  min-width: 140px;
+  background-image: linear-gradient(to left, rgba(0,0,0,0.6), rgba(0,0,0,0));
+  transition: all 0.2s ease-in-out;
+}
+
+.module-frame2 {
+  border: 2px solid #ff2a2a;
+  border-radius: 2px;
+  margin: 5px;
+  padding: 1px;
+  min-height: 10px;
+  min-width: 10px;
+  background-image: linear-gradient(to left, rgba(0,0,0,0.6), rgba(0,0,0,0));
+  transition: all 0.2s ease-in-out;
+}
+
+.module-frame:hover {
+  border-color: #d12424;
+  background-image: linear-gradient(to left, rgba(209, 36, 36, 0.1), rgba(0, 0, 0, 0));
+  box-shadow: 0 0 8px rgba(255, 42, 42, 0.4);
+}
+
+
+// ── Labels & Stats ────────────────────────────────────────────────────────
+.label-primary {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.label-primary2 {
+  font-size: 9px;
+  font-weight: bold;
+  color: #ffffff;
+  border: 2px solid #ff2a2a;
+  border-radius: 2px;
+  margin-bottom: 50px;
+  margin-left: 27px;
+  margin-right: 4px;
+  margin-top: 5px;
+  padding: 1px;
+  min-height: 10px;
+  min-width: 50px;
+  border: none;
+}
+
+.label-secondary {
+  font-size: 8px;
+  color: #888;
+}
+
+.internet-clean-box {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.stats-label {
+  font-size: 10px;
+  font-weight: bold;
+  color: #d12424;
+  letter-spacing: 1px;
+}
+
+.stats-label2 {
+  font-size: 10px;
+  font-weight: bold;
+  color: #d12424;
+  letter-spacing: 1px;
+}
+
+.stats-label3 {
+  font-size: 10px;
+  margin-left: 87px;
+  font-weight: bold;
+  color: #d12424;
+  letter-spacing: 1px;
+}
+
+.stats-box {
+  border-radius: 12px;
+  min-height: 10px;
+  min-width: 100px;
+}
+
+
+// ── RAM & Bars ────────────────────────────────────────────────────────────
+.ascii-bar-frame {
+  border: 1px solid #ff2a2a;
+  border-radius: 4px;
+  margin: 4px;
+  padding: 4px;
+  min-width: 220px;
+  font-size: 10px;
+}
+
+.ram-bar {
+  font-size: 20px;
+  font-family: monospace;
+  color: #ffffff;
+  letter-spacing: 4px;
+  padding: 2px 2px;
+}
+
+.ram-bar2 {
+  color: #ffffff;
+  letter-spacing: 1.5px;
+  padding: 1px 1px;
+  font-size: 10px;
+}
+
+.ram-bar4 {
+  color: #ffffff;
+  letter-spacing: 1.5px;
+  padding: 1px 1px;
+  font-size: 10px;
+}
+
+
+// ── Date & Time ───────────────────────────────────────────────────────────
+.day-time-container {
+  padding: 1em;
+  border-radius: 12px;
+  border: 2px solid #d12424;
+}
+
+.weekday-container {
+  border: 2px solid #1e1e1e;
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 200px;
+}
+
+.weekday-text {
+  font-size: 34px;
+  font-weight: bold;
+  color: #ff2a2a;
+}
+
+.time-text {
+  font-size: 18px;
+  color: #cccccc;
+  margin-top: 6px;
+}
+
+
+// ── Welcome ───────────────────────────────────────────────────────────────
+.welcome-box {
+  background-color: rgba(18,18,18,0.8);
+  border: 2px solid #d12424;
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-top: 10px;
+}
+
+.welcome-text { font-size: 18px; font-weight: bold; color: #ffffff; }
+.welcome-sub  { font-size: 12px; color: #cccccc; margin-top: 4px; }
+.welcome-label { color: #d12424; font-size: 12px; font-weight: bold; }
+.welcome-value { color: #ffffff; font-size: 12px; font-weight: bold; letter-spacing: 1px; }
+
+
+// ── Shades & Animations ───────────────────────────────────────────────────
+.shade2 { background: linear-gradient(to right, black 3px, rgba(10,10,10,0) 15%); }
+.shade  { background-color: #ffffff; }
+
+$window_visible: true;
+
+.animated {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  opacity: 1;
+}
+
+@if not $window_visible {
+  .animated {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+
+// ── Fans ──────────────────────────────────────────────────────────────────
+.fan-ascii {
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 15px;
+  color: #d12424;
+  letter-spacing: 3px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.fan-frame, .fan-frame2 {
+  padding: 0;
+  margin: 2px;
+  font-size: 10px;
+  min-height: 31.2px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-left: 5px;
+}
+
+.fan-rpm { font-size: 10px; color: #ffffff; }
+.fan-rpm2 { font-size: 11px; min-width: 30px; color: #ffffff; padding: 0; }
+
+
+// ── Workspaces ────────────────────────────────────────────────────────────
+.workspace-ascii {
+  font-family: monospace;
+  font-size: 14px;
+  color: #ff2a2a;
+}
+
+.workspace-ascii-highlight {
+  font-family: monospace;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+
+// ── Terminal & Reactor ────────────────────────────────────────────────────
+.terminal-feed {
+  font-family: monospace;
+  font-size: 12px;
+  color: #ff2a2a;
+  padding-left: 8px;
+}
+
+.reactor-ascii {
+  font-family: monospace;
+  font-size: 4px;
+  color: #ffffff;
+  font-weight: bold;
+  min-height: 140px;
+  min-width: 280px;
+}
+
+.ascii-core-status {
+  font-family: monospace;
+  font-size: 10px;
+  border-radius: 0px;
+  color: #ffffff;
+}
+.ascii-core-status2 {
+  font-family: monospace;
+  font-size: 14px;
+  padding: 4px;
+  border-radius: 0px;
+  color: #ffffff;
+}
+
+.log-line {
+  font-family: monospace;
+  font-size: 10px;
+  color: #ffffff;
+  padding: 4px;
+}
+
+.ascii-decor1 {
+  font-family: monospace;
+  font-size: 12px;
+  color: #ffffff;
+  letter-spacing: 1px;
+  padding: 6px;
+  margin: 4px;
+  font-size: 10px;
+}
+
+
+// ── Info Panels ───────────────────────────────────────────────────────────
+.data-row {
+  background-color: transparent;
+  padding: 2px;
+}
+
+.info-left {
+  background-color: #1e1e1e;
+  min-width: 1px;
+  border: 2px solid #ff2a2a;
+  border-radius: 1px;
+}
+
+.info-left2 { min-height: 1px; }
+
+.info-right-box {
+  background-color: #d12424;
+  min-height: 31.2px;
+  margin-bottom: 15px;
+  min-width: 26px;
+}
+
+.info-right-text {
+  font-size: 13px;
+  font-weight: bold;
+  color: #1e1e1e;
+}
+
+
+// ── Power ─────────────────────────────────────────────────────────────────
+.power-label { font-size: 12px; color: #ff2a2a; font-family: monospace; }
+.power-label2 { font-size: 12px; color: #cccccc; font-family: monospace; }
+.power-label3 { font-size: 12px; color: #ff2a2a; font-family: monospace; }
+
+.power-value { font-size: 10px; color: #ffffff; font-family: monospace; margin: 5px; }
+
+.power-header {
+  font-size: 10px;
+  font-weight: bold;
+  color:#d12424;
+  padding: 4px 8px;
+  min-width: 150px;
+}
+
+.power-header-alt {
+  font-size: 6px;
+  font-weight: bold;
+  color: #ff2a2a;
+  padding: 4px 8px;
+  letter-spacing: 1px;
+  min-width: 15px;
+}

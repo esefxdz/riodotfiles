@@ -1,0 +1,110 @@
+# ──────────────────────────────────────────────────────────────────────────
+#  Lazygit Config
+#  Black, red, dystopian themed — matches Rio dotfiles palette
+#  Location: ~/.config/lazygit/config.yml
+#  vers. 1.0.0
+# ──────────────────────────────────────────────────────────────────────────
+
+gui:
+  # ── Window layout ──────────────────────────────────────────────────────────
+  sidePanelWidth: 0.25          # how wide the left panel is
+  expandFocusedSidePanel: true
+  mainPanelSplitMode: "vertical"
+  enlargedSideViewLocation: "left"
+  timeFormat: "2006-01-02"
+  shortTimeFormat: "15:04"
+  scrollHeight: 3
+  scrollPastBottom: true
+  mouseEvents: true
+  skipDiscardChangeWarning: false
+  skipStashWarning: false
+  showFileTree: true
+  showListFooter: false
+  showRandomTip: false           # no tips, keep it clean
+  nerdFontsVersion: "3"
+
+  # ── Theme ───────────────────────────────────────────────────────────────────
+  theme:
+    activeBorderColor:
+      - "#ff2a2a"                # Rio Red bright — active panel border
+      - bold
+    inactiveBorderColor:
+      - "#1e1e1e"                # near-black — inactive border
+    optionsTextColor:
+      - "#888888"                # muted grey — bottom key hints
+    selectedLineBgColor:
+      - "#d12424"                # Rio Red dark — selected line bg
+    selectedRangeBgColor:
+      - "#d12424"
+    cherryPickedCommitBgColor:
+      - "#d12424"
+    cherryPickedCommitFgColor:
+      - "#ffffff"
+    unstagedChangesColor:
+      - "#ff2a2a"                # unstaged = bright red
+    defaultFgColor:
+      - "#cccccc"                # default text — light grey
+
+git:
+  paging:
+    colorArg: always
+    pager: delta                 # uses delta for diff highlighting if installed
+                                 # (optional — remove if not installed)
+  commit:
+    signOff: false
+  merging:
+    manualCommit: false
+  log:
+    order: "topo-order"
+    showGraph: "always"
+    showWholeGraph: false
+  skipHookPrefix: WIP
+  autoFetch: true
+  autoRefresh: true
+  branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --"
+  allBranchesLogCmd: "git log --graph --all --color=always --abbrev-commit --decorate --simplify-by-decoration"
+
+os:
+  editPreset: "nvim"             # change to "vim" or "nano" if you prefer
+
+keybinding:
+  universal:
+    quit: "q"
+    quit-alt1: "<c-c>"
+    return: "<esc>"
+    openRecentRepos: "<c-r>"
+    scrollUpMain: "k"
+    scrollDownMain: "j"
+    scrollUpMain-alt1: "<pgup>"
+    scrollDownMain-alt1: "<pgdown>"
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+#  POST-INSTALL SETUP (Manual Steps)
+#
+#  1. INSTALL:
+#       sudo pacman -S lazygit
+#
+#  2. DEPLOY THIS CONFIG:
+#       mkdir -p ~/.config/lazygit
+#       cp ~/dotfiles/lazygit/config.yml ~/.config/lazygit/config.yml
+#
+#  3. USAGE:
+#       lazygit          → launch in any git repo directory
+#       lg               → via .zshrc alias
+#
+#  4. KEY KEYBINDS (defaults):
+#       space            → stage/unstage file
+#       c                → commit
+#       p                → push
+#       P                → pull
+#       b                → branches panel
+#       s                → stash panel
+#       [  ]             → switch panel left/right
+#       /                → search
+#       q                → quit
+#
+#  OPTIONAL: Install 'delta' for better diff coloring:
+#       sudo pacman -S git-delta
+#       (or remove the 'pager: delta' line above if you skip this)
+# ──────────────────────────────────────────────────────────────────────────────

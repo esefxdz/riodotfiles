@@ -1,0 +1,57 @@
+# ─────────────────────────────────────────────────────────────────────────
+#  My rio alacritty theme
+#  Black, red, dystopian themed
+#  vers. 1.0.0
+# ─────────────────────────────────────────────────────────────────────────
+
+# ── Cursor & Selection Colours ───────────────────────────────────────────
+[colors.cursor]
+cursor = "#ff2a2a"
+text   = "#ffffff"
+
+[colors.selection]
+text       = "#ffffff"
+background = "#440b0b"
+
+# ── Primary Colours ───────────────────────────────────────────────────────
+[colors.primary]
+background = "#0c0c0c"
+foreground = "#cccccc"
+
+# ── Normal Palette (ANSI) ────────────────────────────────────────────────
+[colors.normal]
+black   = "#1a1a1a"
+red     = "#d12424"
+green   = "#87af5f"
+yellow  = "#d7af5f"
+blue    = "#5f87af"
+magenta = "#af5f87"
+cyan    = "#5fafaf"
+white   = "#a8a8a8"
+
+# ── Font Settings ────────────────────────────────────────────────────────
+[font]
+size = 11.0
+
+[font.bold]
+family = "Gohu GohuFont"
+style  = "Bold"
+
+[font.bold_italic]
+family = "Gohu GohuFont"
+style  = "Bold Italic"
+
+[font.italic]
+family = "Gohu GohuFont"
+style  = "Italic"
+
+[font.normal]
+family = "Gohu GohuFont"
+style  = "Regular"
+
+# ── Mouse & Environment ───────────────────────────────────────────────────
+[mouse]
+hide_when_typing = true
+
+[env]
+TERM = "xterm-256color"

@@ -1,0 +1,1 @@
+this is specifically made for paladin and yuuka only

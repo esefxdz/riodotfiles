@@ -1,0 +1,202 @@
+// ──────────────────────────────────────────────────────────────────────────
+//  My rio waybar config
+//  Black, red, dystopian themed
+//  vers. 1.0.0
+// ──────────────────────────────────────────────────────────────────────────
+
+{
+  "layer": "top",
+  "position": "top",
+  "margin-top": 12,
+  "margin-bottom": 0,
+  "width": "100%",
+  "height": 34,
+
+  // ── Modules Layout ───────────────────────────────────────────────
+  "modules-left": [
+    "clock",
+    "custom/power",
+    "network",
+    "custom/microphone",
+
+  ],
+
+  "modules-center": [
+    "custom/workspace-1",
+    "custom/workspace-2",
+    "custom/workspace-3",
+    "custom/workspace-4"
+  ],
+
+  "modules-right": [
+    "custom/swaync",
+    "custom/recorder",
+    "idle_inhibitor",
+    "tray",
+    "keyboard-state",
+    "custom/colorpicker",
+    "custom/clipboard",
+    "custom/volume"
+  ],
+
+  // ── Clock ────────────────────────────────────────────────────────
+  "clock": {
+    "tooltip-format": "{calendar}",
+    "format-alt": "  {:%a, %d %b %Y}",
+    "format": "[   {:%I:%M %p} ]"
+  },
+
+  // ── Network ──────────────────────────────────────────────────────
+  "network": {
+    "format-wifi": "{icon}",
+    "format-icons": ["[ 󰤯 ]", "[ 󰤟 ]", "[ 󰤢 ]", "[ 󰤥 ]", "[ 󰤨 ]"],
+    "format-ethernet": "󰀂",
+    "format-alt": "󱛇",
+    "format-disconnected": "󰖪",
+    "tooltip-format-wifi": "{icon} {essid}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "󰀂  {ifname}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "on-click": "nm-connection-editor",
+    "interval": 5,
+    "nospacing": 1
+  },
+
+  // ── Keyboard Layout ──────────────────────────────────────────────
+  "keyboard-state": {
+    "numlock": true,
+    "capslock": true,
+    "format": "[ {name} ]",
+    "device-path": "auto"
+  },
+
+  // ── Microphone ───────────────────────────────────────────────────
+  "custom/microphone": {
+    "exec": "~/.config/waybar/scripts/mic.sh",
+    "interval": 1,
+    "tooltip": true,
+    "tooltip-format": "Mic Toggle",
+    "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+  },
+
+
+
+  // ── Workspaces (custom scripts) ──────────────────────────────────
+  "custom/workspace-1": {
+    "exec": "~/.config/waybar/scripts/workspaces/workspace-1.sh",
+    "interval": 1,
+    "on-click": "hyprctl dispatch workspace 1",
+    "tooltip": "Switch to workspace 1"
+  },
+  "custom/workspace-2": {
+    "exec": "~/.config/waybar/scripts/workspaces/workspace-2.sh",
+    "interval": 1,
+    "on-click": "hyprctl dispatch workspace 2",
+    "tooltip": "Switch to workspace 2"
+  },
+  "custom/workspace-3": {
+    "exec": "~/.config/waybar/scripts/workspaces/workspace-3.sh",
+    "interval": 1,
+    "on-click": "hyprctl dispatch workspace 3",
+    "tooltip": "Switch to workspace 3"
+  },
+  "custom/workspace-4": {
+    "exec": "~/.config/waybar/scripts/workspaces/workspace-4.sh",
+    "interval": 1,
+    "on-click": "hyprctl dispatch workspace 4",
+    "tooltip": "Switch to workspace 4"
+  },
+
+  // ── Volume ───────────────────────────────────────────────────────
+  "custom/volume": {
+    "exec": "~/.config/waybar/scripts/volume.sh",
+    "return-type": "json",
+    "interval": 1,
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
+    "tooltip": true,
+    "tooltip-format": "Right-click to open mixer"
+  },
+
+  // ── Color Picker ─────────────────────────────────────────────────
+  "custom/colorpicker": {
+    "format": "[ 󰈊 ]",
+    "tooltip": true,
+    "tooltip-format": "Color Picker (Hyprpicker)",
+    "on-click": "hyprpicker -a"
+  },
+
+  // ── Clipboard ────────────────────────────────────────────────────
+  "custom/clipboard": {
+    "exec": "cliphist list | wc -l | xargs -I{} echo '[ \udb80\udd4b {} ]'",
+    "interval": 2,
+    "tooltip": true,
+    "tooltip-format": "Clipboard history (click to open)",
+    "on-click": "cliphist list | rofi -dmenu -p 'Clipboard' | cliphist decode | wl-copy"
+  },
+
+  // ── Power ────────────────────────────────────────────────────────
+
+  "custom/power": {
+    "format": "[ 󰤆 ]",
+    "tooltip": true,
+    "tooltip-format": "Power Menu",
+    "on-click": "~/.config/waybar/scripts/powermenu.sh"
+  },
+
+  // ── Tray ─────────────────────────────────────────────────────────
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8
+  },
+
+  // ── Idle Inhibitor ───────────────────────────────────────────────
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "[ 󰈈 ]",
+      "deactivated": "[ 󰒲 ]"
+    },
+    "tooltip-format-activated": "Idle inhibitor ON — screen won't sleep",
+    "tooltip-format-deactivated": "Idle inhibitor OFF"
+  },
+
+  // ── Screen Recorder ──────────────────────────────────────────────
+  "custom/recorder": {
+    "exec": "~/.config/waybar/scripts/recorder.sh status",
+    "interval": 2,
+    "return-type": "json",
+    "on-click": "~/.config/waybar/scripts/recorder.sh toggle",
+    "tooltip": true
+  },
+
+  // ── SwayNC (notifications) ────────────────────────────────────────
+  "custom/swaync": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": " <span foreground='red'><sup></sup></span>",
+      "none": "",
+      "dnd-notification": " <span foreground='red'><sup></sup></span>",
+      "dnd-none": "",
+      "inhibited-notification": " <span foreground='red'><sup></sup></span>",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": " <span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+
+  // ── Spacer ───────────────────────────────────────────────────────
+  "custom/squares": {
+    "format": " ",
+    "tooltip": false
+  }
+}
+

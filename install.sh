@@ -1,0 +1,326 @@
+#!/usr/bin/env bash
+# ──────────────────────────────────────────────────────────────────────────────
+#  Rio Dotfiles — Installation Script
+#  Arch Linux · Hyprland · NVIDIA RTX 3060 Ti · Ryzen 7 5700X
+#  Run from the root of the cloned dotfiles repo.
+# ──────────────────────────────────────────────────────────────────────────────
+
+set -euo pipefail
+
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG_DIR="$HOME/.config"
+ICONS_DIR="$HOME/.icons"
+SCRIPTS_DIR="$CONFIG_DIR/scripts"
+
+# ── Colors ────────────────────────────────────────────────────────────────────
+RED='\033[1;31m'
+GRN='\033[1;32m'
+YEL='\033[1;33m'
+CYN='\033[1;36m'
+RST='\033[0m'
+
+banner() {
+  echo -e ""
+  echo -e "${RED}══════════════════════════════════════════${RST}"
+  echo -e "${RED}  RIO DOTFILES INSTALLER — dystopian red  ${RST}"
+  echo -e "${RED}══════════════════════════════════════════${RST}"
+  echo -e ""
+}
+
+info()    { echo -e "${CYN}[·]${RST} $1"; }
+success() { echo -e "${GRN}[✓]${RST} $1"; }
+warn()    { echo -e "${YEL}[!]${RST} $1"; }
+die()     { echo -e "${RED}[✗] $1${RST}"; exit 1; }
+
+confirm() {
+  read -rp "$(echo -e "${YEL}[?]${RST} $1 [y/N] ")" ans
+  [[ "$ans" =~ ^[Yy]$ ]]
+}
+
+# ── Preflight checks ──────────────────────────────────────────────────────────
+check_arch() {
+  [[ -f /etc/arch-release ]] || die "This script is for Arch Linux only."
+  success "Arch Linux detected."
+}
+
+check_internet() {
+  ping -c1 archlinux.org &>/dev/null || die "No internet connection."
+  success "Internet connection verified."
+}
+
+check_not_root() {
+  [[ "$EUID" -ne 0 ]] || die "Do NOT run this as root. Run as your regular user."
+}
+
+# ── AUR helper ────────────────────────────────────────────────────────────────
+install_aur_helper() {
+  if command -v yay &>/dev/null; then
+    success "yay already installed."
+    AUR=yay
+  elif command -v paru &>/dev/null; then
+    success "paru already installed."
+    AUR=paru
+  else
+    info "Installing yay (AUR helper)..."
+    sudo pacman -S --needed --noconfirm git base-devel
+    git clone https://aur.archlinux.org/yay.git /tmp/yay
+    (cd /tmp/yay && makepkg -si --noconfirm)
+    rm -rf /tmp/yay
+    AUR=yay
+    success "yay installed."
+  fi
+}
+
+# ── Package install ───────────────────────────────────────────────────────────
+install_packages() {
+  info "Installing packages from packages.txt..."
+  # Strip comments and blank lines
+  PACKAGES=$(grep -v '^\s*#' "$DOTFILES_DIR/packages.txt" | grep -v '^\s*$' | awk '{print $1}')
+  # shellcheck disable=SC2086
+  $AUR -S --needed --noconfirm $PACKAGES
+  success "All packages installed."
+}
+
+# ── Python deps (textual for paladin) ────────────────────────────────────────
+install_python_deps() {
+  info "Installing Python dependencies..."
+  pip install --user textual
+  success "Python deps installed."
+}
+
+# ── Stow configs ──────────────────────────────────────────────────────────────
+link_configs() {
+  info "Linking configs into $CONFIG_DIR..."
+  mkdir -p "$CONFIG_DIR"
+
+  # Directories to link — each folder name matches the app config name
+  DIRS=(
+    alacritty
+    btop
+    cava
+    eww
+    fastfetch
+    gtk
+    hypr
+    lazydocker
+    lazygit
+    mangohud
+    rofi
+    scripts
+    sddm
+    swaync
+    thunar
+    waybar
+    zellij
+    zsh
+  )
+
+  for dir in "${DIRS[@]}"; do
+    SRC="$DOTFILES_DIR/$dir"
+    DEST="$CONFIG_DIR/$dir"
+    if [[ -d "$SRC" ]]; then
+      if [[ -d "$DEST" ]] && ! [[ -L "$DEST" ]]; then
+        warn "$DEST already exists. Backing up to $DEST.bak"
+        mv "$DEST" "$DEST.bak"
+      fi
+      ln -sfn "$SRC" "$DEST"
+      success "Linked: $dir → $CONFIG_DIR/$dir"
+    else
+      warn "Source not found, skipping: $dir"
+    fi
+  done
+}
+
+# ── Cursor theme ──────────────────────────────────────────────────────────────
+install_cursor() {
+  info "Installing mycursor theme..."
+  mkdir -p "$ICONS_DIR"
+  if [[ -d "$DOTFILES_DIR/mycursor" ]]; then
+    cp -r "$DOTFILES_DIR/mycursor" "$ICONS_DIR/mycursor"
+    # Also set as system default
+    mkdir -p "$HOME/.local/share/icons"
+    ln -sfn "$ICONS_DIR/mycursor" "$HOME/.local/share/icons/mycursor"
+    success "Cursor installed to $ICONS_DIR/mycursor"
+  else
+    warn "mycursor directory not found in dotfiles. Skipping cursor install."
+  fi
+}
+
+# ── Zsh as default shell ──────────────────────────────────────────────────────
+set_shell() {
+  if [[ "$SHELL" != "$(which zsh)" ]]; then
+    info "Setting Zsh as default shell..."
+    chsh -s "$(which zsh)"
+    success "Default shell set to Zsh. Takes effect on next login."
+  else
+    success "Zsh is already the default shell."
+  fi
+}
+
+# ── Oh My Zsh ─────────────────────────────────────────────────────────────────
+install_omz() {
+  if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+    info "Installing Oh My Zsh..."
+    RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    success "Oh My Zsh installed."
+  else
+    success "Oh My Zsh already installed."
+  fi
+
+  # Plugins
+  ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+
+  if [[ ! -d "$HOME/.zsh/custom/plugins/zsh-autosuggestions" ]]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions \
+      "$HOME/.zsh/custom/plugins/zsh-autosuggestions"
+    success "zsh-autosuggestions installed."
+  fi
+
+  if [[ ! -d "$HOME/.zsh/custom/plugins/zsh-syntax-highlighting" ]]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting \
+      "$HOME/.zsh/custom/plugins/zsh-syntax-highlighting"
+    success "zsh-syntax-highlighting installed."
+  fi
+}
+
+# ── Symlink .zshrc ────────────────────────────────────────────────────────────
+link_zshrc() {
+  info "Linking .zshrc..."
+  if [[ -f "$HOME/.zshrc" ]] && ! [[ -L "$HOME/.zshrc" ]]; then
+    warn "Backing up existing .zshrc to ~/.zshrc.bak"
+    mv "$HOME/.zshrc" "$HOME/.zshrc.bak"
+  fi
+  ln -sfn "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
+  success "Linked .zshrc"
+}
+
+# ── Scripts ───────────────────────────────────────────────────────────────────
+setup_scripts() {
+  info "Making scripts executable..."
+  chmod +x "$SCRIPTS_DIR/paladin"    2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/yuuka"      2>/dev/null || true
+  chmod +x "$CONFIG_DIR/hypr/scripts/"*.sh 2>/dev/null || true
+  chmod +x "$CONFIG_DIR/eww/scripts/"**/*.sh 2>/dev/null || true
+  chmod +x "$CONFIG_DIR/eww/scripts/"**/*.py 2>/dev/null || true
+  success "Scripts are executable."
+}
+
+# ── Hivemind service ──────────────────────────────────────────────────────────
+setup_hivemind() {
+  if confirm "Set up Hivemind as a systemd service?"; then
+    info "Copying hivemind.py..."
+    mkdir -p "$HOME/.local/bin"
+    cp "$DOTFILES_DIR/hivemind.py" "$HOME/.local/bin/hivemind.py"
+
+    info "Creating systemd user service..."
+    mkdir -p "$HOME/.config/systemd/user"
+    cat > "$HOME/.config/systemd/user/hivemind.service" << 'EOF'
+[Unit]
+Description=Hivemind server daemon
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 %h/.local/bin/hivemind.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+EOF
+    systemctl --user daemon-reload
+    systemctl --user enable hivemind.service
+    systemctl --user start hivemind.service
+    success "Hivemind service enabled and started."
+  fi
+}
+
+# ── SDDM ─────────────────────────────────────────────────────────────────────
+setup_sddm() {
+  info "Enabling SDDM display manager..."
+  # Disable any other active DMs first
+  for dm in gdm lightdm lxdm greetd; do
+    systemctl disable "$dm" 2>/dev/null && warn "Disabled $dm." || true
+  done
+  sudo systemctl enable sddm
+  success "SDDM enabled."
+
+  # Copy SDDM theme if present
+  if [[ -d "$DOTFILES_DIR/sddm" ]]; then
+    sudo mkdir -p /usr/share/sddm/themes/rio
+    sudo cp -r "$DOTFILES_DIR/sddm/"* /usr/share/sddm/themes/rio/
+    # Set theme in SDDM config
+    sudo mkdir -p /etc/sddm.conf.d
+    echo -e "[Theme]\nCurrent=rio" | sudo tee /etc/sddm.conf.d/rio.conf
+    success "SDDM Rio theme applied."
+  fi
+}
+
+# ── lm-sensors ────────────────────────────────────────────────────────────────
+setup_sensors() {
+  if confirm "Run sensors-detect now? (required for Eww hardware widgets — needs root)"; then
+    sudo sensors-detect --auto
+    success "Sensors configured."
+  else
+    warn "Skipped sensors-detect. Run 'sudo sensors-detect' manually before using the Eww hardware panel."
+  fi
+}
+
+# ── Hyprland NVIDIA Env Check ─────────────────────────────────────────────────
+nvidia_reminder() {
+  echo ""
+  echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RST}"
+  echo -e "${RED}  NVIDIA REMINDER                              ${RST}"
+  echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RST}"
+  echo -e "  ${YEL}Make sure 'nvidia_drm.modeset=1' is set${RST}"
+  echo -e "  in your bootloader kernel params."
+  echo -e ""
+  echo -e "  GRUB: edit /etc/default/grub"
+  echo -e "  ${CYN}GRUB_CMDLINE_LINUX_DEFAULT=\"... nvidia_drm.modeset=1\"${RST}"
+  echo -e "  then run: sudo grub-mkconfig -o /boot/grub/grub.cfg"
+  echo -e ""
+  echo -e "  The hyprland.conf is already pre-configured with"
+  echo -e "  GBM_BACKEND, LIBVA_DRIVER_NAME, NVD_BACKEND, etc."
+  echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RST}"
+  echo ""
+}
+
+# ── Done ──────────────────────────────────────────────────────────────────────
+finish() {
+  echo ""
+  echo -e "${RED}══════════════════════════════════════════${RST}"
+  echo -e "${GRN}  Installation complete. Welcome to Rio.  ${RST}"
+  echo -e "${RED}══════════════════════════════════════════${RST}"
+  echo ""
+  echo -e "  Next steps:"
+  echo -e "  ${CYN}1.${RST} Reboot into SDDM → Hyprland"
+  echo -e "  ${CYN}2.${RST} Check NVIDIA kernel param (see above)"
+  echo -e "  ${CYN}3.${RST} Run 'sudo sensors-detect' if you skipped it"
+  echo -e "  ${CYN}4.${RST} Edit ~/config/eww/scripts/net/*.sh"
+  echo -e "     and set your network interface name"
+  echo -e ""
+}
+
+# ── Main ──────────────────────────────────────────────────────────────────────
+main() {
+  banner
+  check_not_root
+  check_arch
+  check_internet
+
+  install_aur_helper
+  install_packages
+  install_python_deps
+  link_configs
+  install_cursor
+  install_omz
+  link_zshrc
+  set_shell
+  setup_scripts
+  setup_hivemind
+  setup_sddm
+  setup_sensors
+  nvidia_reminder
+  finish
+}
+
+main "$@"

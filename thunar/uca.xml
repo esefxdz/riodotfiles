@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<!-- ──────────────────────────────────────────────────────────────────────
+     Thunar Custom Actions — Rio theme
+     Location: ~/.config/Thunar/uca.xml
+     These appear when you right-click files/folders in Thunar.
+     ────────────────────────────────────────────────────────────────────── -->
+
+  <!-- Open terminal in current folder -->
+  <action>
+    <icon>utilities-terminal</icon>
+    <name>Open Terminal Here</name>
+    <submenu></submenu>
+    <unique-id>1700000000000001-1</unique-id>
+    <command>alacritty --working-directory %f</command>
+    <description>Open Alacritty terminal in this folder</description>
+    <range></range>
+    <patterns>*</patterns>
+    <directories/>
+  </action>
+
+  <!-- Open terminal in selected folder -->
+  <action>
+    <icon>utilities-terminal</icon>
+    <name>Open Terminal in Selected Folder</name>
+    <submenu></submenu>
+    <unique-id>1700000000000001-2</unique-id>
+    <command>alacritty --working-directory %F</command>
+    <description>Open Alacritty terminal in the selected folder</description>
+    <range></range>
+    <patterns>*</patterns>
+    <directories/>
+  </action>
+
+  <!-- Copy file path to clipboard -->
+  <action>
+    <icon>edit-copy</icon>
+    <name>Copy Path to Clipboard</name>
+    <submenu></submenu>
+    <unique-id>1700000000000001-3</unique-id>
+    <command>sh -c "echo -n %f | wl-copy"</command>
+    <description>Copy the full file path to the Wayland clipboard</description>
+    <range></range>
+    <patterns>*</patterns>
+    <audio-files/>
+    <image-files/>
+    <other-files/>
+    <text-files/>
+    <video-files/>
+    <directories/>
+  </action>
+
+  <!-- Open as root (requires polkit) -->
+  <action>
+    <icon>dialog-password</icon>
+    <name>Open as Root</name>
+    <submenu></submenu>
+    <unique-id>1700000000000001-4</unique-id>
+    <command>pkexec thunar %F</command>
+    <description>Open selected folder as root (requires polkit)</description>
+    <range></range>
+    <patterns>*</patterns>
+    <directories/>
+  </action>
+
+  <!-- Lazygit in folder -->
+  <action>
+    <icon>git</icon>
+    <name>Open Lazygit Here</name>
+    <submenu></submenu>
+    <unique-id>1700000000000001-5</unique-id>
+    <command>alacritty --working-directory %f -e lazygit</command>
+    <description>Open Lazygit in this directory</description>
+    <range></range>
+    <patterns>*</patterns>
+    <directories/>
+  </action>
+
+</actions>

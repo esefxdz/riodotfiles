@@ -1,0 +1,110 @@
+// ──────────────────────────────────────────────────────────────────────────
+//  Zellij Config
+//  Black, red, dystopian themed — matches Rio dotfiles palette
+//  Location: ~/.config/zellij/config.kdl
+//  vers. 1.0.0
+// ──────────────────────────────────────────────────────────────────────────
+
+// ── Behaviour ────────────────────────────────────────────────────────────────
+default_shell "zsh"
+pane_frames false               // no pane title bars, keeps it clean
+mouse_mode true
+scroll_buffer_size 10000
+copy_on_select true
+default_layout "compact"        // minimal status bar at bottom
+
+// ── Theme ─────────────────────────────────────────────────────────────────────
+theme "rio"
+
+themes {
+    rio {
+        fg          "#cccccc"   // light grey  — text
+        bg          "#121212"   // near-black  — background
+        black       "#1e1e1e"
+        red         "#d12424"   // Rio Red (dark)
+        green       "#cccccc"   // repurposed as grey
+        yellow      "#ff2a2a"   // Rio Red (bright)
+        blue        "#888888"   // muted grey (no blue in this theme)
+        magenta     "#d12424"
+        cyan        "#ff2a2a"
+        white       "#ffffff"
+        orange      "#ff2a2a"
+        ribbon_unselected_fg    "#888888"
+        ribbon_unselected_bg    "#1e1e1e"
+        ribbon_selected_fg      "#ffffff"
+        ribbon_selected_bg      "#d12424"   // active tab = Rio Red
+        table_title_fg          "#ff2a2a"
+        table_cell_unselected_fg "#cccccc"
+        table_cell_selected_fg  "#ffffff"
+        list_unselected_fg      "#888888"
+        list_selected_fg        "#ff2a2a"
+        frame_fg                "#ff2a2a"
+        frame_selected_fg       "#ffffff"
+        exit_code_success       "#ffffff"
+        exit_code_error         "#d12424"
+    }
+}
+
+// ── Keybindings ───────────────────────────────────────────────────────────────
+keybinds clear-defaults=true {
+    // ── Normal mode ────────────────────────────────────────────────────────
+    normal {
+        bind "Ctrl a" { SwitchToMode "Tmux"; }  // Ctrl+a prefix (tmux muscle memory)
+    }
+
+    // ── Tmux-style prefix mode ─────────────────────────────────────────────
+    tmux {
+        bind "Ctrl a" { Write 1; SwitchToMode "Normal"; }   // pass through Ctrl+a
+        bind "\"" { NewPane "Down"; SwitchToMode "Normal"; }
+        bind "%" { NewPane "Right"; SwitchToMode "Normal"; }
+        bind "z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+        bind "x" { CloseFocus; SwitchToMode "Normal"; }
+        bind "h" { MoveFocus "Left"; SwitchToMode "Normal"; }
+        bind "l" { MoveFocus "Right"; SwitchToMode "Normal"; }
+        bind "j" { MoveFocus "Down"; SwitchToMode "Normal"; }
+        bind "k" { MoveFocus "Up"; SwitchToMode "Normal"; }
+        bind "n" { GoToNextTab; SwitchToMode "Normal"; }
+        bind "p" { GoToPreviousTab; SwitchToMode "Normal"; }
+        bind "c" { NewTab; SwitchToMode "Normal"; }
+        bind "[" { SwitchToMode "Scroll"; }
+        bind "d" { Detach; }
+    }
+
+    scroll {
+        bind "Ctrl c" { SwitchToMode "Normal"; }
+        bind "q" { SwitchToMode "Normal"; }
+        bind "j" { ScrollDown; }
+        bind "k" { ScrollUp; }
+        bind "Ctrl d" { HalfPageScrollDown; }
+        bind "Ctrl u" { HalfPageScrollUp; }
+    }
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+//  POST-INSTALL SETUP (Manual Steps)
+//
+//  1. INSTALL:
+//       sudo pacman -S zellij
+//
+//  2. DEPLOY THIS CONFIG:
+//       mkdir -p ~/.config/zellij
+//       cp ~/dotfiles/zellij/config.kdl ~/.config/zellij/config.kdl
+//
+//  3. USAGE:
+//       zellij                    → launch with default layout
+//       zellij -s <name>          → attach or create a named session
+//       zellij list-sessions      → see all active sessions
+//
+//  4. KEYBINDS (custom, tmux-style):
+//       Ctrl+a "      → split pane horizontally
+//       Ctrl+a %      → split pane vertically
+//       Ctrl+a hjkl   → move focus between panes
+//       Ctrl+a z      → toggle fullscreen on focused pane
+//       Ctrl+a x      → close focused pane
+//       Ctrl+a c      → new tab
+//       Ctrl+a n/p    → next/prev tab
+//       Ctrl+a [      → scroll mode (j/k to scroll, q to exit)
+//       Ctrl+a d      → detach session
+//
+//  NOTE: Zsh alias 'zj' is set in .zshrc to launch zellij quickly.
+// ──────────────────────────────────────────────────────────────────────────────
