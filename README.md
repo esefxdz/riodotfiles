@@ -81,6 +81,7 @@ ip link
 # then edit ~/.config/eww/scripts/net/*.sh
 ```
 
+NOTES FOR ME INCASE BRAINFART
 **`yuuka`** is the SSH shortcut to the laptop. It's set to `192.168.1.108`. If that IP ever changes, edit `~/.config/scripts/yuuka`.
 
 **`sensors-detect`** — the script prompts you for this. Run it, it configures lm-sensors for the hardware panel in Eww. Takes about a minute.
