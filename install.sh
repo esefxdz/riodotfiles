@@ -197,19 +197,24 @@ link_zshrc() {
 # ── Scripts ───────────────────────────────────────────────────────────────────
 setup_scripts() {
   info "Making scripts executable..."
-  chmod +x "$SCRIPTS_DIR/paladin"       2>/dev/null || true
-  chmod +x "$SCRIPTS_DIR/yuuka"         2>/dev/null || true
-  chmod +x "$SCRIPTS_DIR/mp4togif"      2>/dev/null || true
-  chmod +x "$SCRIPTS_DIR/webmtogif"     2>/dev/null || true
-  chmod +x "$SCRIPTS_DIR/webmtopng"     2>/dev/null || true
-  chmod +x "$SCRIPTS_DIR/webmtojpg"     2>/dev/null || true
-  chmod +x "$SCRIPTS_DIR/compressvid"   2>/dev/null || true
-  chmod +x "$SCRIPTS_DIR/trimvid"       2>/dev/null || true
-  chmod +x "$CONFIG_DIR/hypr/scripts/"*.sh 2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/paladin"           2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/yuuka"             2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/mp4togif"          2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/webmtogif"         2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/webmtopng"         2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/webmtojpg"         2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/compressvid"       2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/trimvid"           2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/zapret"            2>/dev/null || true
+  chmod +x "$SCRIPTS_DIR/nozapret"          2>/dev/null || true
+  chmod +x "$DOTFILES_DIR/zapret/install.sh"   2>/dev/null || true
+  chmod +x "$DOTFILES_DIR/zapret/uninstall.sh" 2>/dev/null || true
+  chmod +x "$CONFIG_DIR/hypr/scripts/"*.sh  2>/dev/null || true
   chmod +x "$CONFIG_DIR/eww/scripts/"**/*.sh 2>/dev/null || true
   chmod +x "$CONFIG_DIR/eww/scripts/"**/*.py 2>/dev/null || true
   success "Scripts are executable."
 }
+
 
 # ── qBittorrent themes ────────────────────────────────────────────────────────
 setup_qbittorrent() {

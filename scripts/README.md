@@ -10,4 +10,10 @@ all these tools are interactive. just type the command, press enter, and drag-an
 
 ### other
 * `paladin`: workspace management stuff
-* `yuuka`: environment/theme stuff
+* `yuuka`: ssh into yuuka (100kg calculator wife)
+
+### zapret (discord unblock)
+* `zapret`: installs zapret + encrypted DNS. bypasses erdogan's DPI. discord works after this.
+* `nozapret`: uninstalls everything, restores DNS to default.
+
+both need root (they'll sudo themselves). pass `--debug` to see full output.
