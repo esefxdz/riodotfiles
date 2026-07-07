@@ -37,9 +37,7 @@ confirm() {
   [[ "$ans" =~ ^[Yy]$ ]]
 }
 
-if [[ "$(id -u)" -eq 0 ]]; then
-  die "Do NOT run this installer as root. Run it as a normal user; the script will sudo when needed."
-fi
+# ── Preflight checks ──────────────────────────────────────────────────────────
 check_arch() {
   [[ -f /etc/arch-release ]] || die "This script is for Arch Linux only."
   success "Arch Linux detected."
@@ -234,37 +232,44 @@ setup_qbittorrent() {
   fi
 }
 
+# ── GitHub Auth ───────────────────────────────────────────────────────────────
+setup_github() {
+  info "Installing GitHub CLI and Git LFS..."
+  sudo pacman -S --needed --noconfirm git-lfs github-cli
+  git lfs install
+
+  info "Authenticating with GitHub (needed for private wallpapers)..."
+  if gh auth status &>/dev/null; then
+    success "Already logged into GitHub."
+  else
+    echo -e "Follow the prompts below to authenticate (select HTTPS, then login via web browser):\n"
+    gh auth login
+    if gh auth status &>/dev/null; then
+      success "Successfully authenticated with GitHub."
+    else
+      warn "GitHub authentication failed. Private wallpapers will be skipped."
+    fi
+  fi
+}
+
 # ── Wallpapers (Private Repo) ─────────────────────────────────────────────────
 fetch_wallpapers() {
-  WALLPAPER_DIR="$CONFIG_DIR/hypr/wallpapers"
-  WALLPAPER_REPO="esefxdz/riowallpapers"
+  local wallpaper_dir="$CONFIG_DIR/hypr/wallpapers"
+  local wallpaper_repo="esefxdz/riowallpapers"
 
-  if [[ -d "$WALLPAPER_DIR" ]] && [[ -n "$(ls -A "$WALLPAPER_DIR" 2>/dev/null)" ]]; then
-    warn "Wallpapers already exist at $WALLPAPER_DIR. Skipping."
+  if [[ -d "$wallpaper_dir" ]] && [[ -n "$(ls -A "$wallpaper_dir" 2>/dev/null)" ]]; then
+    warn "Wallpapers already exist at $wallpaper_dir. Skipping."
     return
   fi
 
   info "Setting up private wallpapers repository..."
-  
-  # Ensure Git LFS and GitHub CLI are installed
-  sudo pacman -S --needed --noconfirm git-lfs github-cli
-  git lfs install
-
-  echo -e ""
-  warn "Your wallpapers repo is PRIVATE."
-  info "You need to log into GitHub to download them."
-  echo -e "Follow the prompts below to authenticate (select HTTPS, then login via web browser):\n"
-  
-  # Prompt user to login
-  gh auth login
 
   if gh auth status &>/dev/null; then
-    info "Successfully authenticated. Cloning wallpapers..."
-    # Clone using GH CLI which automatically handles the auth token
-    GIT_LFS_SKIP_SMUDGE=0 gh repo clone "$WALLPAPER_REPO" "$WALLPAPER_DIR"
+    info "Cloning private wallpapers..."
+    GIT_LFS_SKIP_SMUDGE=0 gh repo clone "$wallpaper_repo" "$wallpaper_dir"
     success "Private wallpapers downloaded."
   else
-    die "GitHub authentication failed. Cannot download private wallpapers."
+    warn "Not logged into GitHub. Skipping private wallpapers."
   fi
 }
 
@@ -320,30 +325,46 @@ setup_sddm() {
 
 # ── GRUB Theme ────────────────────────────────────────────────────────────────
 setup_grub() {
-  if [[ -d "$DOTFILES_DIR/xenlism-grub" ]]; then
-    if confirm "Install Xenlism Arch GRUB theme? (requires root)"; then
-      info "Installing Xenlism GRUB theme..."
-      
-      sudo mkdir -p /boot/grub/themes/xenlism-arch
-      # Extract directly into the themes directory (xenlism tars usually contain the theme folder, so we strip 1)
-      sudo tar -xf "$DOTFILES_DIR/xenlism-grub/xenlism-grub-arch-1080p.tar.xz" -C /boot/grub/themes/xenlism-arch --strip-components=1
-
-      info "Configuring /etc/default/grub..."
-      sudo sed -i 's/^GRUB_TERMINAL_OUTPUT/#GRUB_TERMINAL_OUTPUT/g' /etc/default/grub
-      sudo sed -i 's/^GRUB_TIMEOUT_STYLE/#GRUB_TIMEOUT_STYLE/g' /etc/default/grub
-      
-      if grep -q "^GRUB_THEME=" /etc/default/grub; then
-        sudo sed -i 's|^GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/xenlism-arch/theme.txt"|' /etc/default/grub
-      else
-        echo 'GRUB_THEME="/boot/grub/themes/xenlism-arch/theme.txt"' | sudo tee -a /etc/default/grub >/dev/null
-      fi
-
-      info "Updating GRUB bootloader..."
-      sudo grub-mkconfig -o /boot/grub/grub.cfg
-      success "Xenlism GRUB theme installed."
+  if confirm "Install Xenlism GRUB theme? (requires root)"; then
+    info "Downloading Xenlism GRUB theme..."
+    
+    # We use a temporary directory so we don't bloat your dotfiles
+    local tmp_grub="/tmp/xenlism-grub-install"
+    rm -rf "$tmp_grub"
+    git clone --depth 1 https://github.com/xenlism/Grub-themes.git "$tmp_grub"
+    
+    info "Installing Xenlism Arch theme..."
+    sudo mkdir -p /usr/share/grub/themes
+    
+    # Xenlism has multiple themes, we'll grab the Arch one
+    if [[ -d "$tmp_grub/xenlism-arch" ]]; then
+      sudo cp -r "$tmp_grub/xenlism-arch" /usr/share/grub/themes/
     else
-      warn "Skipped Xenlism GRUB installation."
+      # Fallback if structure changed
+      warn "xenlism-arch not found, falling back to installer script..."
+      (cd "$tmp_grub" && sudo ./install.sh)
     fi
+    
+    info "Configuring /etc/default/grub..."
+    # Comment out terminal output/timeout styles if they exist
+    sudo sed -i 's/^GRUB_TERMINAL_OUTPUT/#GRUB_TERMINAL_OUTPUT/g' /etc/default/grub
+    sudo sed -i 's/^GRUB_TIMEOUT_STYLE/#GRUB_TIMEOUT_STYLE/g' /etc/default/grub
+    
+    # Update or append GRUB_THEME
+    if grep -q "^GRUB_THEME=" /etc/default/grub; then
+      sudo sed -i 's|^GRUB_THEME=.*|GRUB_THEME="/usr/share/grub/themes/xenlism-arch/theme.txt"|' /etc/default/grub
+    else
+      echo 'GRUB_THEME="/usr/share/grub/themes/xenlism-arch/theme.txt"' | sudo tee -a /etc/default/grub >/dev/null
+    fi
+
+    info "Updating GRUB bootloader..."
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+    
+    # Cleanup
+    rm -rf "$tmp_grub"
+    success "Xenlism GRUB theme installed & cleaned up."
+  else
+    warn "Skipped GRUB theme installation."
   fi
 }
 
@@ -399,6 +420,7 @@ main() {
   check_arch
   check_internet
 
+  setup_github
   install_aur_helper
   install_packages
   install_python_deps
