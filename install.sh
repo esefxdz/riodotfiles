@@ -170,15 +170,15 @@ install_omz() {
   # Plugins
   ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
-  if [[ ! -d "$HOME/.zsh/custom/plugins/zsh-autosuggestions" ]]; then
+  if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions \
-      "$HOME/.zsh/custom/plugins/zsh-autosuggestions"
+      "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
     success "zsh-autosuggestions installed."
   fi
 
-  if [[ ! -d "$HOME/.zsh/custom/plugins/zsh-syntax-highlighting" ]]; then
+  if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting \
-      "$HOME/.zsh/custom/plugins/zsh-syntax-highlighting"
+      "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
     success "zsh-syntax-highlighting installed."
   fi
 }
