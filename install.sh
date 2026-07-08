@@ -323,51 +323,6 @@ setup_sddm() {
   fi
 }
 
-# ── GRUB Theme ────────────────────────────────────────────────────────────────
-setup_grub() {
-  if confirm "Install Xenlism GRUB theme? (requires root)"; then
-    info "Downloading Xenlism GRUB theme..."
-    
-    # We use a temporary directory so we don't bloat your dotfiles
-    local tmp_grub="/tmp/xenlism-grub-install"
-    rm -rf "$tmp_grub"
-    git clone --depth 1 https://github.com/xenlism/Grub-themes.git "$tmp_grub"
-    
-    info "Installing Xenlism Arch theme..."
-    sudo mkdir -p /usr/share/grub/themes
-    
-    # Xenlism has multiple themes, we'll grab the Arch one
-    if [[ -d "$tmp_grub/xenlism-arch" ]]; then
-      sudo cp -r "$tmp_grub/xenlism-arch" /usr/share/grub/themes/
-    else
-      # Fallback if structure changed
-      warn "xenlism-arch not found, falling back to installer script..."
-      (cd "$tmp_grub" && sudo ./install.sh)
-    fi
-    
-    info "Configuring /etc/default/grub..."
-    # Comment out terminal output/timeout styles if they exist
-    sudo sed -i 's/^GRUB_TERMINAL_OUTPUT/#GRUB_TERMINAL_OUTPUT/g' /etc/default/grub
-    sudo sed -i 's/^GRUB_TIMEOUT_STYLE/#GRUB_TIMEOUT_STYLE/g' /etc/default/grub
-    
-    # Update or append GRUB_THEME
-    if grep -q "^GRUB_THEME=" /etc/default/grub; then
-      sudo sed -i 's|^GRUB_THEME=.*|GRUB_THEME="/usr/share/grub/themes/xenlism-arch/theme.txt"|' /etc/default/grub
-    else
-      echo 'GRUB_THEME="/usr/share/grub/themes/xenlism-arch/theme.txt"' | sudo tee -a /etc/default/grub >/dev/null
-    fi
-
-    info "Updating GRUB bootloader..."
-    sudo grub-mkconfig -o /boot/grub/grub.cfg
-    
-    # Cleanup
-    rm -rf "$tmp_grub"
-    success "Xenlism GRUB theme installed & cleaned up."
-  else
-    warn "Skipped GRUB theme installation."
-  fi
-}
-
 # ── lm-sensors ────────────────────────────────────────────────────────────────
 setup_sensors() {
   if confirm "Run sensors-detect now? (required for Eww hardware widgets — needs root)"; then
@@ -386,10 +341,6 @@ nvidia_reminder() {
   echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RST}"
   echo -e "  ${YEL}Make sure 'nvidia_drm.modeset=1' is set${RST}"
   echo -e "  in your bootloader kernel params."
-  echo -e ""
-  echo -e "  GRUB: edit /etc/default/grub"
-  echo -e "  ${CYN}GRUB_CMDLINE_LINUX_DEFAULT=\"... nvidia_drm.modeset=1\"${RST}"
-  echo -e "  then run: sudo grub-mkconfig -o /boot/grub/grub.cfg"
   echo -e ""
   echo -e "  The hyprland.conf is already pre-configured with"
   echo -e "  GBM_BACKEND, LIBVA_DRIVER_NAME, NVD_BACKEND, etc."
@@ -434,7 +385,6 @@ main() {
   fetch_wallpapers
   setup_hivemind
   setup_sddm
-  setup_grub
   setup_sensors
   nvidia_reminder
   finish

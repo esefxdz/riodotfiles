@@ -66,13 +66,7 @@ The script installs `yay` if you don't have it, pulls everything from `packages.
 
 ### Things you still need to do yourself
 
-**Before rebooting** — add `nvidia_drm.modeset=1` to your kernel params or the GPU won't cooperate with Hyprland:
-
-```bash
-# /etc/default/grub
-GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia_drm.modeset=1"
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-```
+**Before rebooting** — add `nvidia_drm.modeset=1` to your bootloader's kernel params or the GPU won't cooperate with Hyprland.
 
 **After you're in** — the Eww network widgets are hardcoded to `wlp4s0`. Check your interface name and fix it:
 
