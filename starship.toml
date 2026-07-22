@@ -1,0 +1,27 @@
+# ─────────────────────────────────────────────────────────────────────────
+#  Rio Starship prompt — red/black themed
+# ─────────────────────────────────────────────────────────────────────────
+
+"$schema" = "https://starship.rs/config-schema.json"
+
+format = """
+$directory\
+$git_branch\
+$fill\
+$line_break\
+$character"""
+
+[directory]
+style = "red bold"
+truncation_length = 3
+
+[git_branch]
+style = "#d12424"
+symbol = " "
+
+[character]
+success_symbol = "[▶](bold red)"
+error_symbol = "[▶](bold red)"
+
+[fill]
+symbol = " "

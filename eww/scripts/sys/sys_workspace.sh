@@ -13,7 +13,7 @@ if [[ -z "$CURRENT" || "$CURRENT" == "null" ]]; then
   exit 1
 fi
 
-for i in {1..4}; do
+for i in {1..10}; do
   if [[ "$i" -eq "$CURRENT" ]]; then
     echo "ws${i}= [ ACTIVE ]"
   else

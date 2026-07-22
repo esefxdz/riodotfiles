@@ -37,6 +37,12 @@
 (defpoll ws2 :interval "1s" "bash ~/.config/eww/scripts/sys/sys_workspace.sh | grep ws2= | cut -d= -f2 || echo 'null'")
 (defpoll ws3 :interval "1s" "bash ~/.config/eww/scripts/sys/sys_workspace.sh | grep ws3= | cut -d= -f2 || echo 'null'")
 (defpoll ws4 :interval "1s" "bash ~/.config/eww/scripts/sys/sys_workspace.sh | grep ws4= | cut -d= -f2 || echo 'null'")
+(defpoll ws5 :interval "1s" "bash ~/.config/eww/scripts/sys/sys_workspace.sh | grep ws5= | cut -d= -f2 || echo 'null'")
+(defpoll ws6 :interval "1s" "bash ~/.config/eww/scripts/sys/sys_workspace.sh | grep ws6= | cut -d= -f2 || echo 'null'")
+(defpoll ws7 :interval "1s" "bash ~/.config/eww/scripts/sys/sys_workspace.sh | grep ws7= | cut -d= -f2 || echo 'null'")
+(defpoll ws8 :interval "1s" "bash ~/.config/eww/scripts/sys/sys_workspace.sh | grep ws8= | cut -d= -f2 || echo 'null'")
+(defpoll ws9 :interval "1s" "bash ~/.config/eww/scripts/sys/sys_workspace.sh | grep ws9= | cut -d= -f2 || echo 'null'")
+(defpoll ws10 :interval "1s" "bash ~/.config/eww/scripts/sys/sys_workspace.sh | grep ws10= | cut -d= -f2 || echo 'null'")
 (defpoll current_workspace :interval "0.5s" "hyprctl activeworkspace -j | jq -r '.id' || echo 'null'")
 
 ;; === Power & Voltage ─────────────────────────────────────────────────────────
