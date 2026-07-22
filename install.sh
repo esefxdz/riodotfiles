@@ -109,7 +109,7 @@ link_configs() {
     rofi
     scripts
     swaync
-    thunar
+    Thunar
     waybar
     zellij
   )
