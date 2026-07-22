@@ -51,7 +51,7 @@ This is my main workstation (`Rio`). Built for raw performance and maximum aesth
 Fresh Arch base install. No desktop, no extras. Just internet.
 
 ```bash
-git clone https://github.com/yourusername/riodotfiles.git ~/dotfiles
+git clone https://github.com/esefxdz/riodotfiles.git ~/dotfiles
 cd ~/dotfiles
 bash install.sh
 ```
