@@ -134,6 +134,9 @@ udiskie             # Auto-mount USBs on plug-in (relies on udisks2)
 thunar              # Lightweight file manager
 tumbler             # Thumbnail generation for Thunar
 file-roller         # GUI archive manager (.zip, .tar.gz extraction)
+trash-cli           # Trash CLI (provides trash-put for safe rm)
+unrar               # RAR extraction
+p7zip               # 7z extraction
 papirus-icon-theme  # Recommended icon theme (looks great with dark GTK)
 
 # ── AUR Helpers (Optional but recommended) ──────────────────────────────────

@@ -100,6 +100,7 @@ link_configs() {
     cava
     eww
     fastfetch
+    ffmpeg_tools
     gtk
     hypr
     lazydocker
@@ -107,12 +108,10 @@ link_configs() {
     mangohud
     rofi
     scripts
-    sddm
     swaync
     thunar
     waybar
     zellij
-    zsh
   )
 
   for dir in "${DIRS[@]}"; do
@@ -197,8 +196,6 @@ link_zshrc() {
 # ── Scripts ───────────────────────────────────────────────────────────────────
 setup_scripts() {
   info "Making scripts executable..."
-  chmod +x "$SCRIPTS_DIR/paladin"           2>/dev/null || true
-  chmod +x "$SCRIPTS_DIR/yuuka"             2>/dev/null || true
   chmod +x "$SCRIPTS_DIR/mp4togif"          2>/dev/null || true
   chmod +x "$SCRIPTS_DIR/webmtogif"         2>/dev/null || true
   chmod +x "$SCRIPTS_DIR/webmtopng"         2>/dev/null || true
@@ -210,8 +207,10 @@ setup_scripts() {
   chmod +x "$DOTFILES_DIR/zapret/install.sh"   2>/dev/null || true
   chmod +x "$DOTFILES_DIR/zapret/uninstall.sh" 2>/dev/null || true
   chmod +x "$CONFIG_DIR/hypr/scripts/"*.sh  2>/dev/null || true
+  shopt -s globstar 2>/dev/null || true
   chmod +x "$CONFIG_DIR/eww/scripts/"**/*.sh 2>/dev/null || true
   chmod +x "$CONFIG_DIR/eww/scripts/"**/*.py 2>/dev/null || true
+  shopt -u globstar 2>/dev/null || true
   success "Scripts are executable."
 }
 

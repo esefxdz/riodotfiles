@@ -26,11 +26,11 @@ if [[ -d "$HOME/.oh-my-zsh" ]]; then
   source "$ZSH/oh-my-zsh.sh"
 fi
 
-[[ -f "$HOME/.zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh" ]] && \
-  source "$HOME/.zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
+[[ -f "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh" ]] && \
+  source "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 
-[[ -f "$HOME/.zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh" ]] && \
-  source "$HOME/.zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+[[ -f "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh" ]] && \
+  source "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
 
 # ==================
 # User's Config (zshrcyuuka)
@@ -135,7 +135,7 @@ alias lzd='lazydocker'                       # docker TUI
 # zellij needs TERM to be set correctly inside alacritty
 export TERM=xterm-256color
 
-# Cargo (Rust) — needed for chess-tui and any other cargo installs
+# Cargo (Rust)
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
 # ── Custom commands ───────────────────────────────────────────────────────────
