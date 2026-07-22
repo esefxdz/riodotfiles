@@ -84,8 +84,8 @@ install_packages() {
 # ── Python deps (textual for paladin) ────────────────────────────────────────
 install_python_deps() {
   info "Installing Python dependencies..."
-  pip install --user --break-system-packages textual
-  success "Python deps installed."
+  # pip install --user --break-system-packages textual  # needed only if paladin is present
+  success "Python deps skipped (nothing to install)."
 }
 
 # ── Stow configs ──────────────────────────────────────────────────────────────
@@ -273,58 +273,13 @@ fetch_wallpapers() {
   fi
 }
 
-# ── Hivemind service ──────────────────────────────────────────────────────────
-setup_hivemind() {
-  if [[ ! -f "$DOTFILES_DIR/hivemind.py" ]]; then
-    warn "hivemind.py not found in dotfiles — skipping. (It belongs on the server, not here.)"
-    return
-  fi
-  if confirm "Set up Hivemind as a systemd service?"; then
-    info "Copying hivemind.py..."
-    mkdir -p "$HOME/.local/bin"
-    cp "$DOTFILES_DIR/hivemind.py" "$HOME/.local/bin/hivemind.py"
-
-    info "Creating systemd user service..."
-    mkdir -p "$HOME/.config/systemd/user"
-    cat > "$HOME/.config/systemd/user/hivemind.service" << 'EOF'
-[Unit]
-Description=Hivemind server daemon
-After=network.target
-
-[Service]
-ExecStart=/usr/bin/python3 %h/.local/bin/hivemind.py
-Restart=always
-RestartSec=5
-
-[Install]
-WantedBy=default.target
-EOF
-    systemctl --user daemon-reload
-    systemctl --user enable hivemind.service
-    systemctl --user start hivemind.service
-    success "Hivemind service enabled and started."
-  fi
 }
 
-# ── SDDM ─────────────────────────────────────────────────────────────────────
-setup_sddm() {
-  info "Enabling SDDM display manager..."
-  # Disable any other active DMs first
-  for dm in gdm lightdm lxdm greetd; do
-    systemctl disable "$dm" 2>/dev/null && warn "Disabled $dm." || true
-  done
-  sudo systemctl enable sddm
-  success "SDDM enabled."
-
-  # Copy SDDM theme if present
-  if [[ -d "$DOTFILES_DIR/sddm" ]]; then
-    sudo mkdir -p /usr/share/sddm/themes/rio
-    sudo cp -r "$DOTFILES_DIR/sddm/themes/rio/"* /usr/share/sddm/themes/rio/
-    # Set theme in SDDM config
-    sudo mkdir -p /etc/sddm.conf.d
-    echo -e "[Theme]\nCurrent=rio" | sudo tee /etc/sddm.conf.d/rio.conf
-    success "SDDM Rio theme applied."
-  fi
+# ── ly Display Manager ─────────────────────────────────────────────────────
+setup_ly() {
+  info "Enabling ly display manager..."
+  sudo systemctl enable ly
+  success "ly enabled — TUI login on next boot."
 }
 
 # ── lm-sensors ────────────────────────────────────────────────────────────────
@@ -360,7 +315,7 @@ finish() {
   echo -e "${RED}══════════════════════════════════════════${RST}"
   echo ""
   echo -e "  Next steps:"
-  echo -e "  ${CYN}1.${RST} Reboot into SDDM → Hyprland"
+  echo -e "  ${CYN}1.${RST} Reboot — ly will greet you, then Hyprland"
   echo -e "  ${CYN}2.${RST} Check NVIDIA kernel param (see above)"
   echo -e "  ${CYN}3.${RST} Run 'sudo sensors-detect' if you skipped it"
   echo -e "  ${CYN}4.${RST} Edit ~/config/eww/scripts/net/*.sh"
@@ -387,8 +342,7 @@ main() {
   setup_scripts
   setup_qbittorrent
   fetch_wallpapers
-  # setup_hivemind  # DISABLED — hivemind.py not in repo (server-side)
-  setup_sddm
+  setup_ly
   setup_sensors
   nvidia_reminder
   finish

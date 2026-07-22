@@ -76,7 +76,7 @@ ip link
 ```
 
 NOTES FOR ME INCASE BRAINFART
-**`yuuka`** is the SSH shortcut to the laptop. It's set to `192.168.1.108`. If that IP ever changes, edit `~/.config/scripts/yuuka`.
+- If you need SSH shortcuts or hivemind monitoring, set those up after install.
 
 **`sensors-detect`** — the script prompts you for this. Run it, it configures lm-sensors for the hardware panel in Eww. Takes about a minute.
 
@@ -84,7 +84,7 @@ NOTES FOR ME INCASE BRAINFART
 
 ## Notes
 
-- The `scripts/` folder is on PATH. `paladin` monitors Hivemind, `yuuka` SSHs into the laptop.
+- The `scripts/` folder is on PATH. `compressvid`, `trimvid`, and ffmpeg wrappers live here.
 - Cursor is `XsX - Alpha Blended with Shadows`, renamed to `mycursor` internally.
 - The NVIDIA env vars (`GBM_BACKEND`, `LIBVA_DRIVER_NAME`, etc.) are already in `hyprland.conf`. Don't touch them unless you know what you're doing.
 - Throughout installation only 5 packages are pulled from the AUR. eww, mpvpaper, lazydocker, python-textual, hyprpicker. As of now these are not malware but you need to check that for yourself.

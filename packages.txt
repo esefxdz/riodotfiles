@@ -18,10 +18,7 @@ nvidia-utils        # NVIDIA utilities (required for Wayland)
 nvidia-settings     # NVIDIA control panel
 
 # ── Display Manager (Boot Screen) ───────────────────────────────────────────
-sddm                # The login screen
-qt5-graphicaleffects # Required for SDDM themes
-qt5-quickcontrols2  # Required for SDDM themes
-qt5-svg             # Required for SDDM themes
+ly                  # Simple TUI display manager
 
 # ── Utilities & Daemons ─────────────────────────────────────────────────────
 waybar              # Top status bar

@@ -8,10 +8,6 @@ all these tools are interactive. just type the command, press enter, and drag-an
 * `compressvid`: squishes a fat video. it asks for a target size (like `9.9` or `25`) and uses 2 passes to perfectly hit that limit without going over. good for discord.
 * `trimvid`: instant cut. type start time, type end time. doesn't re-encode anything so it takes zero seconds and loses no quality.
 
-### other
-* `paladin`: workspace management stuff
-* `yuuka`: ssh into yuuka (100kg calculator wife)
-
 ### zapret (discord unblock)
 * `zapret`: installs zapret + encrypted DNS. bypasses erdogan's DPI. discord works after this.
 * `nozapret`: uninstalls everything, restores DNS to default.
