@@ -13,9 +13,10 @@ qt5-wayland         # Wayland support for Qt5 apps
 qt6-wayland         # Wayland support for Qt6 apps
 
 # ── Hardware & Drivers (NVIDIA) ──────────────────────────────────────────────
-nvidia              # Proprietary NVIDIA driver
-nvidia-utils        # NVIDIA utilities (required for Wayland)
-nvidia-settings     # NVIDIA control panel
+# ⚠️  ONLY ON BARE METAL with NVIDIA GPU. Remove/comment for VMs.
+# nvidia              # Proprietary NVIDIA driver
+# nvidia-utils        # NVIDIA utilities (required for Wayland)
+# nvidia-settings     # NVIDIA control panel
 
 # ── Display Manager (Boot Screen) ───────────────────────────────────────────
 sddm                # The login screen
@@ -107,13 +108,14 @@ paru                # Alternative AUR helper (choose one)
 # ── Python & Pip Dependencies ───────────────────────────────────────────────
 python              # Base Python interpreter
 pip                 # Python package installer
-textual             # TUI framework used by `paladin`
+# textual installed via pip in install.sh
 
 # ── Additional Utilities ─────────────────────────────────────────────────────
 git                 # Version control system
 curl                # Data transfer tool
 wget                # Download utility
 base-devel          # Development tools (make, gcc, etc.)
+rust                # Rust toolchain (needed by eww AUR build)
 ffmpeg              # Video and audio processing (used by ffmpeg scripts)
 
 # ── Terminal Multiplexing & Dev Tools ──────────────────────────────────
@@ -143,5 +145,4 @@ papirus-icon-theme  # Recommended icon theme (looks great with dark GTK)
 # `rofi-wayland`, `eww`, and `mpvpaper` if they aren't in the main repos.
 
 # ── Python (pip) dependencies ────────────────────────────────────────────────
-# Install with: pip install textual
-textual             # TUI framework used by `paladin` (Hivemind monitor)
+# Installed via pip in install.sh (textual)
