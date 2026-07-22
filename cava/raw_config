@@ -1,0 +1,17 @@
+# ─────────────────────────────────────────────────────────────────────────
+#  Rio cava raw config — feeds audio_visualizer.py
+#  Minimal config, raw ASCII output to /tmp/cava.raw
+# ─────────────────────────────────────────────────────────────────────────
+
+[general]
+bars = 64
+framerate = 30
+
+[input]
+method = pulse
+source = auto
+
+[output]
+method = raw
+data_format = ascii
+raw_target = /tmp/cava.raw

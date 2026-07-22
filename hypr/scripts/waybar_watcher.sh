@@ -147,7 +147,10 @@ while true; do
             pgrep -x eww || eww daemon &
             sleep 1
             eww open-many $eww_windows
-            pgrep -x cava || nohup cava -p "$HOME/.config/cava/config" >/dev/null 2>&1 &
+            pgrep -x cava || {
+              nohup cava -p "$HOME/.config/cava/config" >/dev/null 2>&1 &
+              nohup cava -p "$HOME/.config/cava/raw_config" >/dev/null 2>&1 &
+            }
             eww_visible=true
         fi
 
