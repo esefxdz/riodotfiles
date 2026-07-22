@@ -19,10 +19,11 @@ qt6-wayland         # Wayland support for Qt6 apps
 # nvidia-settings     # NVIDIA control panel
 
 # ── Display Manager (Boot Screen) ───────────────────────────────────────────
-sddm                # The login screen
-qt5-graphicaleffects # Required for SDDM themes
-qt5-quickcontrols2  # Required for SDDM themes
-qt5-svg             # Required for SDDM themes
+# DISABLED FOR VM — TTY login + Hyprland manually
+# sddm                # The login screen
+# qt5-graphicaleffects # Required for SDDM themes
+# qt5-quickcontrols2  # Required for SDDM themes
+# qt5-svg             # Required for SDDM themes
 
 # ── Utilities & Daemons ─────────────────────────────────────────────────────
 waybar              # Top status bar

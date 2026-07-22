@@ -387,8 +387,8 @@ main() {
   setup_scripts
   setup_qbittorrent
   fetch_wallpapers
-  setup_hivemind
-  setup_sddm
+  # setup_hivemind  # DISABLED — hivemind.py not in repo
+  # setup_sddm      # DISABLED — boot to TTY, run Hyprland manually
   setup_sensors
   nvidia_reminder
   finish
