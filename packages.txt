@@ -61,6 +61,7 @@ playerctl           # Media keys controller
 brightnessctl       # Screen brightness control
 cava                # Audio visualizer (OpenGL/SLA)
 pavucontrol         # Volume mixer GUI
+zsh-completions      # Extra Zsh completions
 nvtop               # NVIDIA GPU monitoring (top‑like)
 
 # ── Widgets (Eww) ───────────────────────────────────────────────────────────

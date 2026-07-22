@@ -5,7 +5,8 @@
 #  as a percentage (0–100) of a configured max speed.
 # ─────────────────────────────────────────────────────────────────────────────
 
-iface="eth0"        # your active Ethernet interface (from `ip -br link`)
+iface=$(ip route get 1.1.1.1 2>/dev/null | awk '{print $5; exit}')  # auto-detect default interface
+[[ -z "$iface" ]] && iface="eth0"
 max_speed=12500000  # adjust: 100 Mbps (100*1e6 / 8) (bytes/sec). Adjust if faster.
 
 # First sample

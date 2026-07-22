@@ -128,6 +128,12 @@ link_configs() {
       warn "Source not found, skipping: $dir"
     fi
   done
+
+  # Starship prompt config
+  if [[ -f "$DOTFILES_DIR/starship.toml" ]]; then
+    ln -sfn "$DOTFILES_DIR/starship.toml" "$CONFIG_DIR/starship.toml"
+    success "Linked: starship.toml"
+  fi
 }
 
 # ── Cursor theme ──────────────────────────────────────────────────────────────

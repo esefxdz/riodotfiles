@@ -9,7 +9,8 @@
 #
 # ─────────────────────────────────────────────────────────────────────────────
 
-iface="eth0"   # Ethernet interface
+iface=$(ip route get 1.1.1.1 2>/dev/null | awk '{print $5; exit}')  # auto-detect default interface
+[[ -z "$iface" ]] && iface="eth0"
 max_speed=12500000   # adjust: this is 100 Mbps (100*1e6 / 8)
 
 # First sample
