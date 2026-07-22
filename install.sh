@@ -275,6 +275,10 @@ fetch_wallpapers() {
 
 # ── Hivemind service ──────────────────────────────────────────────────────────
 setup_hivemind() {
+  if [[ ! -f "$DOTFILES_DIR/hivemind.py" ]]; then
+    warn "hivemind.py not found in dotfiles — skipping. (It belongs on the server, not here.)"
+    return
+  fi
   if confirm "Set up Hivemind as a systemd service?"; then
     info "Copying hivemind.py..."
     mkdir -p "$HOME/.local/bin"
@@ -315,7 +319,7 @@ setup_sddm() {
   # Copy SDDM theme if present
   if [[ -d "$DOTFILES_DIR/sddm" ]]; then
     sudo mkdir -p /usr/share/sddm/themes/rio
-    sudo cp -r "$DOTFILES_DIR/sddm/"* /usr/share/sddm/themes/rio/
+    sudo cp -r "$DOTFILES_DIR/sddm/themes/rio/"* /usr/share/sddm/themes/rio/
     # Set theme in SDDM config
     sudo mkdir -p /etc/sddm.conf.d
     echo -e "[Theme]\nCurrent=rio" | sudo tee /etc/sddm.conf.d/rio.conf
