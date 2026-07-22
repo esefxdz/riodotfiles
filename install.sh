@@ -269,16 +269,29 @@ fetch_wallpapers() {
     GIT_LFS_SKIP_SMUDGE=0 gh repo clone "$wallpaper_repo" "$wallpaper_dir"
     success "Private wallpapers downloaded."
   else
-    warn "Not logged into GitHub. Skipping private wallpapers."
+    warn "Not logged into GitHub. Creating fallback wallpaper..."
+    mkdir -p "$wallpaper_dir"
+    # Generate a solid black 1920x1080 PNG as fallback
+    if command -v ffmpeg &>/dev/null; then
+      ffmpeg -y -f lavfi -i color=c=0x0c0c0c:s=1920x1080:d=1 -frames:v 1 "$wallpaper_dir/black.png" &>/dev/null
+      success "Fallback black.png created."
+    else
+      warn "ffmpeg not available — no wallpaper fallback."
+    fi
   fi
-}
-
 }
 
 # ── ly Display Manager ─────────────────────────────────────────────────────
 setup_ly() {
-  info "Enabling ly display manager..."
+  info "Setting up ly display manager..."
   sudo systemctl enable ly
+
+  # Copy ly config
+  if [[ -f "$DOTFILES_DIR/ly/config.ini" ]]; then
+    sudo cp "$DOTFILES_DIR/ly/config.ini" /etc/ly/config.ini
+    success "ly config applied."
+  fi
+
   success "ly enabled — TUI login on next boot."
 }
 
