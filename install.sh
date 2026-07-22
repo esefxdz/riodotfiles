@@ -77,7 +77,7 @@ install_packages() {
   # Strip comments and blank lines
   PACKAGES=$(grep -v '^\s*#' "$DOTFILES_DIR/packages.txt" | grep -v '^\s*$' | awk '{print $1}')
   # shellcheck disable=SC2086
-  $AUR -S --needed --noconfirm --answerclean None --answerdiff None --answeredit None --answerupgrade None $PACKAGES
+  $AUR -S --needed --noconfirm $PACKAGES
   success "All packages installed."
 }
 
