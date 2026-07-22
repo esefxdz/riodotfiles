@@ -353,7 +353,7 @@ main() {
   install_packages
   install_python_deps
   link_configs
-  install_cursor
+  # install_cursor  # DISABLED — needs proper Xcursor theme, not Windows .cur files
   install_omz
   link_zshrc
   set_shell
