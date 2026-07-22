@@ -17,7 +17,7 @@ bars = 64
 ; Choose the backend you actually use.  Here we keep *pulse* active and
 ; leave the other back‑ends commented for easy switching.
 method = pulse
-source = alsa_output.pci-0000_06_00.6.analog-stereo.monitor
+source = auto
 ;method = pipewire
 ;source = auto
 ;method = alsa
