@@ -13,17 +13,15 @@ qt5-wayland         # Wayland support for Qt5 apps
 qt6-wayland         # Wayland support for Qt6 apps
 
 # ── Hardware & Drivers (NVIDIA) ──────────────────────────────────────────────
-# ⚠️  ONLY ON BARE METAL with NVIDIA GPU. Remove/comment for VMs.
-# nvidia              # Proprietary NVIDIA driver
-# nvidia-utils        # NVIDIA utilities (required for Wayland)
-# nvidia-settings     # NVIDIA control panel
+nvidia              # Proprietary NVIDIA driver
+nvidia-utils        # NVIDIA utilities (required for Wayland)
+nvidia-settings     # NVIDIA control panel
 
 # ── Display Manager (Boot Screen) ───────────────────────────────────────────
-# DISABLED FOR VM — TTY login + Hyprland manually
-# sddm                # The login screen
-# qt5-graphicaleffects # Required for SDDM themes
-# qt5-quickcontrols2  # Required for SDDM themes
-# qt5-svg             # Required for SDDM themes
+sddm                # The login screen
+qt5-graphicaleffects # Required for SDDM themes
+qt5-quickcontrols2  # Required for SDDM themes
+qt5-svg             # Required for SDDM themes
 
 # ── Utilities & Daemons ─────────────────────────────────────────────────────
 waybar              # Top status bar
