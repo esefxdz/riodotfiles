@@ -107,7 +107,7 @@ paru                # Alternative AUR helper (choose one)
 
 # ── Python & Pip Dependencies ───────────────────────────────────────────────
 python              # Base Python interpreter
-pip                 # Python package installer
+python-pip          # Python package installer (pip)
 # textual installed via pip in install.sh
 
 # ── Additional Utilities ─────────────────────────────────────────────────────

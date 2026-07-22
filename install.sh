@@ -84,7 +84,7 @@ install_packages() {
 # ── Python deps (textual for paladin) ────────────────────────────────────────
 install_python_deps() {
   info "Installing Python dependencies..."
-  pip install --user textual
+  pip install --user --break-system-packages textual
   success "Python deps installed."
 }
 
