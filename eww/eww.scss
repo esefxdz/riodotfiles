@@ -283,28 +283,6 @@ $window_visible: true;
 }
 
 
-// ── Fans ──────────────────────────────────────────────────────────────────
-.fan-ascii {
-  font-family: "JetBrainsMono Nerd Font", monospace;
-  font-size: 15px;
-  color: #d12424;
-  letter-spacing: 3px;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.fan-frame, .fan-frame2 {
-  padding: 0;
-  margin: 2px;
-  font-size: 10px;
-  min-height: 31.2px;
-  margin-bottom: 15px;
-  margin-top: 15px;
-  margin-left: 5px;
-}
-
-.fan-rpm { font-size: 10px; color: #ffffff; }
-.fan-rpm2 { font-size: 11px; min-width: 30px; color: #ffffff; padding: 0; }
-
 
 // ── Workspaces ────────────────────────────────────────────────────────────
 .workspace-ascii {

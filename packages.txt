@@ -87,8 +87,6 @@ mangohud            # Vulkan/OpenGL overlay for FPS & stats
 steam               # Gaming platform (optional)
 wine               # Windows compatibility layer (optional)
 lutris              # Game manager (optional)
-stockfish           # Chess engine (used by chess-tui for AI play)
-rust                # Rust toolchain — needed to install chess-tui via cargo
 
 # ── System Back‑bone ──────────────────────────────────────────────────────────
 gnome-keyring       # Secret storage (for VSCode, GitHub, etc.)

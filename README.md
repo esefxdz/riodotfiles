@@ -87,7 +87,6 @@ NOTES FOR ME INCASE BRAINFART
 - The `scripts/` folder is on PATH. `paladin` monitors Hivemind, `yuuka` SSHs into the laptop.
 - Cursor is `XsX - Alpha Blended with Shadows`, renamed to `mycursor` internally.
 - The NVIDIA env vars (`GBM_BACKEND`, `LIBVA_DRIVER_NAME`, etc.) are already in `hyprland.conf`. Don't touch them unless you know what you're doing.
-- Workspace 9 has Firefox preloaded silently on boot. Don't close it or you lose the instant-load trick.
 - Throughout installation only 5 packages are pulled from the AUR. eww, mpvpaper, lazydocker, python-textual, hyprpicker. As of now these are not malware but you need to check that for yourself.
 - thx 1k2s pewds and elars
-- cargo install chess-tui and type chess on terminal for funny
+

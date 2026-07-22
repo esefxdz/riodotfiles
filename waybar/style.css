@@ -196,7 +196,13 @@ window#waybar {
 #custom-workspace-1:hover,
 #custom-workspace-2:hover,
 #custom-workspace-3:hover,
-#custom-workspace-4:hover {
+#custom-workspace-4:hover,
+#custom-workspace-5:hover,
+#custom-workspace-6:hover,
+#custom-workspace-7:hover,
+#custom-workspace-8:hover,
+#custom-workspace-9:hover,
+#custom-workspace-10:hover {
   color: #ff2a2a; 
   transition: all 0.2s ease-in-out;
 }

@@ -7,7 +7,7 @@
 
 /* Global defaults */
 * {
-  font: "JetBrainsMono Nerd Font 11";
+  font: "JetBrainsMono Nerd Font 13";
   blur: true;
   padding: 10px;
   background-color: transparent;
@@ -87,7 +87,7 @@ prompt {
 entry {
   padding: 8px;
   expand: false;
-  font: "JetBrainsMono Nerd Font 12";
+  font: "JetBrainsMono Nerd Font 13";
   text-color: #ffffff;
   border-radius: 0px 3px 0px 0px;
   background-color: #1e1e1e;  // input field
