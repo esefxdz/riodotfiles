@@ -6,6 +6,7 @@
 
 # ── Core Wayland & Window Manager ───────────────────────────────────────────
 hyprland            # The window manager itself
+xorg-xwayland       # X11 compatibility layer (required for X apps)
 hyprcursor          # Hyprland native cursor support
 xdg-desktop-portal-hyprland # Required for screen sharing / portals
 xdg-desktop-portal-gtk      # Fallback portal (required for some apps)
@@ -72,6 +73,7 @@ socat               # Network socket utility for Hyprland/Eww communication
 # ── Fonts & Icons ───────────────────────────────────────────────────────────
 ttf-jetbrains-mono-nerd # Primary mono‑nerd font
 ttf-nerd-fonts-symbols # Symbol fallback font
+gohufont             # GohuFont for Alacritty terminal (AUR)
 papirus-icon-theme   # Dark icon theme (matches Rua aesthetic)
 nwg-look            # GTK theme/icon cursor configurator (Wayland GUI)
 
@@ -123,6 +125,7 @@ lazydocker          # TUI for docker container management
 # ── Window Manager Utilities ────────────────────────────────────────────────
 hyprpicker          # Wayland native color picker
 cliphist            # Wayland clipboard history daemon
+wf-recorder         # Screen recorder (used by waybar recorder widget)
 
 # ── Invisible System Backbone ──────────────────────────────────────────────
 gnome-keyring       # Stores auth tokens (VSCode, GitHub, Discord)
