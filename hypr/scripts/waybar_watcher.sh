@@ -5,7 +5,7 @@
 #
 #  Modes (written to MODE_FILE by the `bedtime` command):
 #    normal  → rio_main.mp4  / rio_static.png
-#    secret  → rio_secret.mp4 / rio_static_secret.png
+#    secret  → rio_secret.mp4 / rio_static_secret.jpg
 #
 #  State:
 #    0 windows  → mpvpaper video (fallback: static PNG) + Eww widgets
@@ -19,7 +19,7 @@ MODE_FILE="$HOME/.cache/hypr_wallpaper_mode"
 video_normal="$HOME/.config/hypr/wallpapers/rio_main.mp4"
 video_secret="$HOME/.config/hypr/wallpapers/rio_secret.mp4"
 static_normal="$HOME/.config/hypr/wallpapers/rio_static.png"
-static_secret="$HOME/.config/hypr/wallpapers/rio_static_secret.png"
+static_secret="$HOME/.config/hypr/wallpapers/rio_static_secret.jpg"
 wallpaper_black="$HOME/.config/hypr/wallpapers/black.png"
 
 # ── State ────────────────────────────────────────────────────────────────────

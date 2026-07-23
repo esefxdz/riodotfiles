@@ -17,6 +17,7 @@ qt6-wayland         # Wayland support for Qt6 apps
 nvidia              # Proprietary NVIDIA driver
 nvidia-utils        # NVIDIA utilities (required for Wayland)
 nvidia-settings     # NVIDIA control panel
+mpv                 # Video player (boot animation + mpvpaper)
 
 # ── Display Manager (Boot Screen) ───────────────────────────────────────────
 ly                  # Simple TUI display manager

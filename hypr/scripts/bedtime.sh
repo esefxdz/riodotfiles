@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 #  bedtime — toggle secret wallpaper mode
 #
-#  normal → secret : switches to rio_secret.mp4 + rio_static_secret.png
+#  normal → secret : switches to rio_secret.mp4 + rio_static_secret.jpg
 #  secret → normal : switches back to rio_main.mp4 + rio_static.png
 #
 #  waybar_watcher.sh polls ~/.cache/hypr_wallpaper_mode every 0.5s

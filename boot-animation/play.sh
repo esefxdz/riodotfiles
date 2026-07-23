@@ -1,12 +1,13 @@
 #!/bin/bash
 # ─────────────────────────────────────────────────────────────────────────────
 #  Rio Boot Animation
-#  Plays boot.mp4 with audio on the DRM framebuffer before SDDM loads.
+#  Plays boot.mp4 with audio on the DRM framebuffer before the display
+#  manager (ly) loads.
 #
 #  Behaviour:
 #  - Video loops indefinitely until killed.
 #  - Script holds for a minimum of 4 seconds before killing mpv.
-#  - SDDM (display-manager.service) is blocked until this script exits.
+#  - display-manager.service is blocked until this script exits.
 #    So the desktop only loads once we're done here.
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -31,9 +32,9 @@ MPV_PID=$!
 # If the video is shorter than 4 seconds it will have already looped by now.
 sleep 4
 
-# Kill the looping video. SDDM will now proceed.
+# Kill the looping video. The display manager will now proceed.
 kill "$MPV_PID" 2>/dev/null
 wait "$MPV_PID" 2>/dev/null
 
-# Restore cursor before handing off to SDDM
+# Restore cursor before handing off to the display manager
 setterm -cursor on 2>/dev/null

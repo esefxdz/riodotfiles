@@ -310,6 +310,31 @@ setup_sensors() {
   fi
 }
 
+# ── Boot Animation ────────────────────────────────────────────────────────────
+setup_boot_animation() {
+  local src="$DOTFILES_DIR/boot-animation"
+  local dest="/opt/boot-animation"
+
+  if [[ ! -f "$src/boot.mp4" ]]; then
+    warn "boot.mp4 not found in boot-animation/. Skipping boot animation setup."
+    return
+  fi
+
+  if ! command -v mpv &>/dev/null; then
+    warn "mpv not installed — boot animation needs it. Install it first."
+    return
+  fi
+
+  info "Installing boot animation..."
+  sudo mkdir -p "$dest"
+  sudo cp "$src/boot.mp4" "$dest/boot.mp4"
+  sudo cp "$src/play.sh" "$dest/play.sh"
+  sudo chmod +x "$dest/play.sh"
+  sudo cp "$src/boot-animation.service" /etc/systemd/system/
+  sudo systemctl enable boot-animation.service
+  success "Boot animation installed and enabled."
+}
+
 # ── Hyprland NVIDIA Env Check ─────────────────────────────────────────────────
 nvidia_reminder() {
   echo ""
@@ -336,8 +361,7 @@ finish() {
   echo -e "  ${CYN}1.${RST} Reboot — ly will greet you, then Hyprland"
   echo -e "  ${CYN}2.${RST} Check NVIDIA kernel param (see above)"
   echo -e "  ${CYN}3.${RST} Run 'sudo sensors-detect' if you skipped it"
-  echo -e "  ${CYN}4.${RST} Edit ~/config/eww/scripts/net/*.sh"
-  echo -e "     and set your network interface name"
+  echo -e "  ${CYN}4.${RST} Your network interface is auto-detected — no manual config needed"
   echo -e ""
 }
 
@@ -362,6 +386,7 @@ main() {
   fetch_wallpapers
   setup_ly
   setup_sensors
+  setup_boot_animation
   nvidia_reminder
   finish
 }

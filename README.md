@@ -25,7 +25,7 @@
 
 | Role | Tool |
 |------|------|
-| **Display Manager** | SDDM |
+| **Display Manager** | ly |
 | **Compositor** | Hyprland |
 | **Status Bar** | Waybar |
 | **Widgets** | Eww |
@@ -37,6 +37,7 @@
 | **Fonts** | JetBrainsMono Nerd Font, GohuFont |
 | **Clipboard** | Cliphist |
 | **Screenshot** | Grim + Swappy |
+| **Boot Animation** | mpv on DRM framebuffer |
 
 ---
 
@@ -58,7 +59,7 @@ bash install.sh
 
 Don't run it as root if that wasnt obvious.
 
-The script installs `yay` if you don't have it, pulls everything from `packages.txt`, symlinks all the configs into `~/.config/`, drops the cursor into `~/.icons/`, sets up Zsh with Oh My Zsh and the plugins, and enables SDDM. It'll ask you once whether you want Hivemind running as a background service — say yes, that's the right choice.
+The script installs `yay` if you don't have it, pulls everything from `packages.txt`, symlinks all the configs into `~/.config/`, sets up Zsh with Oh My Zsh and the plugins, and enables `ly` as the display manager. It also installs a custom boot animation (Plymouth-style `.mp4` video on the DRM framebuffer).
 
 `eww` comes from the AUR so it compiles from source. Give it a minute.
 
@@ -66,17 +67,9 @@ The script installs `yay` if you don't have it, pulls everything from `packages.
 
 ### Things you still need to do yourself
 
-**Before rebooting** — add `nvidia_drm.modeset=1` to your bootloader's kernel params or the GPU won't cooperate with Hyprland.
+**Before rebooting** — add `nvidia_drm.modeset=1` to your bootloader's kernel params or the GPU won't cooperate with Hyprland. The boot animation also needs this for `--vo=drm`.
 
-**After you're in** — the Eww network widgets are hardcoded to `wlp4s0`. Check your interface name and fix it:
-
-```bash
-ip link
-# then edit ~/.config/eww/scripts/net/*.sh
-```
-
-NOTES FOR ME INCASE BRAINFART
-- If you need SSH shortcuts or hivemind monitoring, set those up after install.
+**Network widgets** — the Eww net scripts auto-detect your default interface via `ip route`. No manual config needed. If you have multiple interfaces and need to override, edit `~/.config/eww/scripts/net/*.sh`.
 
 **`sensors-detect`** — the script prompts you for this. Run it, it configures lm-sensors for the hardware panel in Eww. Takes about a minute.
 
@@ -85,8 +78,6 @@ NOTES FOR ME INCASE BRAINFART
 ## Notes
 
 - The `scripts/` folder is on PATH. `compressvid`, `trimvid`, and ffmpeg wrappers live here.
-- Cursor is `XsX - Alpha Blended with Shadows`, renamed to `mycursor` internally.
 - The NVIDIA env vars (`GBM_BACKEND`, `LIBVA_DRIVER_NAME`, etc.) are already in `hyprland.conf`. Don't touch them unless you know what you're doing.
-- Throughout installation only 5 packages are pulled from the AUR. eww, mpvpaper, lazydocker, python-textual, hyprpicker. As of now these are not malware but you need to check that for yourself.
+- Several packages come from the AUR: `eww`, `mpvpaper`, `gohufont`, `lazydocker`, `hyprpicker`, and others. `yay` handles them automatically.
 - thx 1k2s pewds and elars
-

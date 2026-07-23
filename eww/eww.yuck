@@ -7,15 +7,15 @@
 
 ;; === Windows ─────────────────────────────────────────────────────────────
 (include "./windows/ascii/visualizer_window.yuck") 
-(include "windows/ascii/audio_status.yuck")
-(include "windows/sys/four_boxes.yuck")
-(include "windows/sys/workspace_window_text.yuck")
-(include "windows/bar/cpu_ram_storage_bars.yuck")
-(include "windows/sys/active_workspace.yuck")
-(include "windows/net/ascii_decor_frame.yuck")
-(include "windows/net/net_bars.yuck")
-(include "windows/net/right_internet_text.yuck")
-(include "windows/misc/welcome_text.yuck")
+(include "./windows/ascii/audio_status.yuck")
+(include "./windows/sys/four_boxes.yuck")
+(include "./windows/sys/workspace_window_text.yuck")
+(include "./windows/bar/cpu_ram_storage_bars.yuck")
+(include "./windows/sys/active_workspace.yuck")
+(include "./windows/net/ascii_decor_frame.yuck")
+(include "./windows/net/net_bars.yuck")
+(include "./windows/net/right_internet_text.yuck")
+(include "./windows/misc/welcome_text.yuck")
 
 ;; === Variables ───────────────────────────────────────────────────────────────
 (defvar ascii_decor1 "
