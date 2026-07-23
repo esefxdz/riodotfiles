@@ -11,13 +11,6 @@
   background-color: transparent;
 }
 
-.visualizer {
-  color: #ff2a2a; // Rio Red
-  font-family: monospace;
-  background-color: transparent;
-  font-size: 9px;
-}
-
 .visualizer-container {
   border-radius: 2px;
   background: linear-gradient(to top, rgba(18,18,18,0.5), rgba(18,18,18,0));
@@ -37,25 +30,6 @@ window {
   box-shadow: none;
   border: none;
 }
-
-.window {
-  background-color: transparent;
-}
-
-
-// ── Pixel ASCII ───────────────────────────────────────────────────────────
-.pixel-container {
-  background-color: transparent;
-  padding: 2px;
-}
-
-.pixel-ascii {
-  font-family: monospace;
-  font-size: 6px;
-  color: #ff2a2a;
-  background-color: transparent;
-}
-
 
 // ── Frames ────────────────────────────────────────────────────────────────
 .outer-frame {
@@ -174,38 +148,7 @@ window {
 }
 
 
-// ── Welcome ───────────────────────────────────────────────────────────────
-.welcome-box {
-  background-color: rgba(18,18,18,0.8);
-  border: 2px solid #d12424;
-  border-radius: 8px;
-  padding: 12px 20px;
-  margin-top: 10px;
-}
 
-.welcome-text { font-size: 18px; font-weight: bold; color: #ffffff; }
-.welcome-sub  { font-size: 12px; color: #cccccc; margin-top: 4px; }
-.welcome-label { color: #d12424; font-size: 12px; font-weight: bold; }
-.welcome-value { color: #ffffff; font-size: 12px; font-weight: bold; letter-spacing: 1px; }
-
-
-// ── Shades & Animations ───────────────────────────────────────────────────
-.shade2 { background: linear-gradient(to right, black 3px, rgba(10,10,10,0) 15%); }
-.shade  { background-color: #ffffff; }
-
-$window_visible: true;
-
-.animated {
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  opacity: 1;
-}
-
-@if not $window_visible {
-  .animated {
-    opacity: 0;
-    pointer-events: none;
-  }
-}
 
 
 
