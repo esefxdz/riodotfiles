@@ -108,9 +108,10 @@ paru                # Alternative AUR helper (choose one)
 # ── Python & Pip Dependencies ───────────────────────────────────────────────
 python              # Base Python interpreter
 python-pip          # Python package installer (pip)
-# textual installed via pip in install.sh
+python-numpy        # NumPy (required by audio visualizer)
 
 # ── Additional Utilities ─────────────────────────────────────────────────────
+bc                  # CLI calculator (used by waybar volume widget)
 git                 # Version control system
 curl                # Data transfer tool
 wget                # Download utility
@@ -127,6 +128,9 @@ lazydocker          # TUI for docker container management
 hyprpicker          # Wayland native color picker
 cliphist            # Wayland clipboard history daemon
 wf-recorder         # Screen recorder (used by waybar recorder widget)
+
+# ── Hardware Monitoring ──────────────────────────────────────────────────
+lm_sensors          # CLI sensor readings (CPU/GPU temps, voltages, fan speeds)
 
 # ── Invisible System Backbone ──────────────────────────────────────────────
 gnome-keyring       # Stores auth tokens (VSCode, GitHub, Discord)
